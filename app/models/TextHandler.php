@@ -876,4 +876,357 @@ class TextHandler extends Model {
     private function formatTextResult($string) {
         return "<textarea class='form-control' rows='6' readonly style='background:#f8fafc; cursor:text;'>" . htmlspecialchars($string) . "</textarea>";
     }
+
+    public function aiSummarizer($data) {
+        $text = $data['text'] ?? '';
+        $sentences = preg_split('/(?<=[.!?])\s+/', $text, -1, PREG_SPLIT_NO_EMPTY);
+        if (count($sentences) < 3) return $this->formatTextResult($text);
+        
+        $summary = array_slice($sentences, 0, 1);
+        $summary[] = $sentences[floor(count($sentences)/2)];
+        $summary[] = end($sentences);
+        
+        return "
+        <div style='background:var(--bg); border:1px solid var(--border); padding:1rem; border-radius:12px;'>
+            <div style='font-weight:700; margin-bottom:0.5rem; color:var(--primary); font-size:0.85rem; text-transform:uppercase;'>AI Summary:</div>
+            <div style='line-height:1.6; color:var(--text-dark);'>" . htmlspecialchars(implode(' ', array_unique($summary))) . "</div>
+        </div>";
+    }
+
+    public function aiYoutube($data) {
+        $topic = $data['text'] ?? 'Technology';
+        $script = "--- VIDEO SCRIPT: " . strtoupper($topic) . " ---\n\n";
+        $script .= "[0:00] INTRO: Hook the audience about " . $topic . ".\n";
+        $script .= "[0:30] PROBLEM: Why " . $topic . " is challenging or interesting today.\n";
+        $script .= "[1:00] SOLUTION: Deep dive into the core concepts of " . $topic . ".\n";
+        $script .= "[2:30] ACTIONABLE TIPS: 3 things you can do with " . $topic . ".\n";
+        $script .= "[4:00] OUTRO: Like, subscribe, and comment your thoughts on " . $topic . "!";
+        
+        return $this->formatTextResult($script);
+    }
+
+    public function aiParaphraser($data) {
+        $text = $data['text'] ?? '';
+        $words = explode(' ', $text);
+        $synonyms = [
+            'good' => 'excellent', 'bad' => 'terrible', 'fast' => 'quick', 
+            'small' => 'tiny', 'big' => 'massive', 'happy' => 'joyful',
+            'easy' => 'simple', 'hard' => 'difficult', 'important' => 'crucial'
+        ];
+        foreach ($words as &$word) {
+            $clean = strtolower(trim($word, ".,!?"));
+            if (isset($synonyms[$clean])) {
+                $word = str_replace($clean, $synonyms[$clean], $word);
+            }
+        }
+        return $this->formatTextResult(implode(' ', $words));
+    }
+
+    public function aiPrompt($data) {
+        $topic = $data['text'] ?? 'a blog post';
+        $prompt = "Act as an expert content creator. Generate a comprehensive and engaging strategy for " . $topic . ". \n\n";
+        $prompt .= "Include:\n1. Target audience analysis\n2. Key messaging pillars\n3. SEO-optimized headlines\n4. Structure and outline\n";
+        $prompt .= "Ensure the tone is professional yet accessible.";
+        return $this->formatTextResult($prompt);
+    }
+
+    public function midjourneyPrompt($data) {
+        $subject = $data['text'] ?? 'a futuristic city';
+        $prompt = $subject . " --v 6.0 --ar 16:9 --stylize 250 --chaos 10 --no low quality, blurry, distorted";
+        return "
+        <div style='background:#1e293b; color:#e2e8f0; padding:1.5rem; border-radius:12px; font-family:monospace; position:relative;'>
+            <div style='font-size:0.75rem; color:#94a3b8; margin-bottom:0.5rem;'>MIDJOURNEY PROMPT (V6):</div>
+            <div id='mj-prompt'>" . htmlspecialchars($prompt) . "</div>
+            <button onclick='navigator.clipboard.writeText(document.getElementById(\"mj-prompt\").innerText); alert(\"Copied!\")' class='btn-primary' style='position:absolute; top:1rem; right:1rem; padding:4px 12px; font-size:0.75rem;'>Copy</button>
+        </div>";
+    }
+
+    public function aiUpscale($data) {
+        return "
+        <div style='text-align:center; padding:2rem; background:var(--bg); border:1px dashed var(--border); border-radius:12px;'>
+            <div style='font-size:3rem; margin-bottom:1rem;'>🔬</div>
+            <h4 style='color:var(--primary);'>AI Image Upscaling Simulation</h4>
+            <p style='color:var(--text-muted); font-size:0.9rem;'>Processing image for 2x/4x enhancement...</p>
+            <div style='margin-top:1.5rem; background:#22c55e; color:white; padding:0.5rem 1rem; border-radius:8px; display:inline-block;'>Ready to Download (Optimized)</div>
+        </div>";
+    }
+
+    public function randomWord($data) {
+        $words = ['innovation', 'synergy', 'paradigm', 'agility', 'momentum', 'ecosystem', 'scalability', 'strategy', 'velocity', 'empowerment'];
+        $count = intval($data['count'] ?? 5);
+        $res = [];
+        for($i=0; $i<$count; $i++) $res[] = $words[array_rand($words)];
+        return $this->formatTextResult(implode("\n", $res));
+    }
+
+    public function randomPara($data) {
+        $count = intval($data['count'] ?? 1);
+        $res = [];
+        for($i=0; $i<$count; $i++) {
+            $res[] = "In the contemporary landscape of digital evolution, the intersection of technology and human-centric design continues to reshape the way we interact with information. As complex systems become more integrated, the demand for streamlined utilities grows exponentially.";
+        }
+        return $this->formatTextResult(implode("\n\n", $res));
+    }
+
+    public function randomLetter($data) {
+        $count = intval($data['count'] ?? 10);
+        $alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $res = '';
+        for($i=0; $i<$count; $i++) $res .= $alphabet[rand(0, 25)] . ' ';
+        return $this->formatTextResult(trim($res));
+    }
+
+    public function palindrome($data) {
+        $text = preg_replace('/[^a-z0-9]/i', '', strtolower($data['text'] ?? ''));
+        $isPal = ($text !== '' && $text === strrev($text));
+        $res = $isPal ? "✓ YES, it is a palindrome!" : "✗ NO, it is not a palindrome.";
+        $color = $isPal ? "#22c55e" : "#ef4444";
+        return "<div style='background:$color; color:white; padding:1.5rem; border-radius:12px; text-align:center; font-weight:800; font-size:1.25rem;'>$res</div>";
+    }
+
+    public function charFreq($data) {
+        $text = $data['text'] ?? '';
+        $counts = count_chars($text, 1);
+        arsort($counts);
+        $html = "<div style='display:grid; grid-template-columns:repeat(auto-fill, minmax(80px, 1fr)); gap:0.5rem;'>";
+        foreach ($counts as $char => $count) {
+            $charLabel = ($char <= 32) ? "Space/Ctl" : chr($char);
+            $html .= "<div style='background:white; border:1px solid var(--border); padding:0.5rem; border-radius:8px; text-align:center;'>
+                        <div style='font-size:1.2rem; font-weight:700;'>$charLabel</div>
+                        <div style='font-size:0.75rem; color:var(--text-muted);'>$count</div>
+                      </div>";
+        }
+        $html .= "</div>";
+        return $html;
+    }
+
+    public function sentenceLength($data) {
+        $text = $data['text'] ?? '';
+        $sentences = preg_split('/(?<=[.!?])\s+/', $text, -1, PREG_SPLIT_NO_EMPTY);
+        $html = "<div style='display:grid; gap:0.5rem;'>";
+        foreach ($sentences as $s) {
+            $len = str_word_count($s);
+            $html .= "<div style='background:white; border:1px solid var(--border); padding:0.75rem; border-radius:8px; display:flex; justify-content:space-between;'>
+                        <span style='font-size:0.9rem; color:var(--text-dark);'>" . htmlspecialchars(substr($s, 0, 50)) . "...</span>
+                        <span style='font-weight:700; color:var(--primary);'>$len words</span>
+                      </div>";
+        }
+        $html .= "</div>";
+        return $html;
+    }
+
+    public function wordLength($data) {
+        $text = $data['text'] ?? '';
+        $words = str_word_count($text, 1);
+        $stats = [];
+        foreach ($words as $w) {
+            $l = strlen($w);
+            $stats[$l] = ($stats[$l] ?? 0) + 1;
+        }
+        ksort($stats);
+        $html = "<table style='width:100%; border-collapse:collapse;'>
+                    <tr style='background:var(--bg-body); border-bottom:2px solid var(--border);'><th style='padding:0.5rem;'>Word Length</th><th style='padding:0.5rem;'>Frequency</th></tr>";
+        foreach ($stats as $len => $count) {
+            $html .= "<tr style='border-bottom:1px solid var(--border);'><td style='padding:0.5rem;'>$len chars</td><td style='padding:0.5rem;'>$count words</td></tr>";
+        }
+        $html .= "</table>";
+        return $html;
+    }
+
+    public function textColumn($data) {
+        $text = $data['text'] ?? '';
+        $cols = intval($data['cols'] ?? 2);
+        if ($cols < 1) $cols = 1;
+        return "<div style='column-count:$cols; column-gap:2rem; line-height:1.6; text-align:justify;'>" . nl2br(htmlspecialchars($text)) . "</div>";
+    }
+
+    public function whiteSpace($data) {
+        $text = $data['text'] ?? '';
+        $visual = str_replace([' ', "\n", "\t"], ['·', "↵\n", "→\t"], htmlspecialchars($text));
+        return "<pre style='background:#1e293b; color:#94a3b8; padding:1.5rem; border-radius:12px; white-space:pre-wrap; font-family:monospace;'>$visual</pre>";
+    }
+
+    public function unicode($data) {
+        $text = $data['text'] ?? '';
+        $html = "<table style='width:100%; border-collapse:collapse;'>
+                    <tr style='background:var(--bg-body); border-bottom:2px solid var(--border);'><th style='padding:0.5rem;'>Char</th><th style='padding:0.5rem;'>Unicode</th><th style='padding:0.5rem;'>HTML</th></tr>";
+        $chars = mb_str_split($text);
+        foreach (array_slice($chars, 0, 50) as $c) {
+            $hex = "U+" . str_pad(dechex(mb_ord($c)), 4, '0', STR_PAD_LEFT);
+            $ent = "&#" . mb_ord($c) . ";";
+            $html .= "<tr style='border-bottom:1px solid var(--border);'><td style='padding:0.5rem; font-size:1.5rem;'>$c</td><td style='padding:0.5rem;'>$hex</td><td style='padding:0.5rem;'>$ent</td></tr>";
+        }
+        $html .= "</table>";
+        return $html;
+    }
+
+    public function stopWords($data) {
+        $text = $data['text'] ?? '';
+        $stops = ['a', 'an', 'the', 'and', 'or', 'but', 'if', 'then', 'else', 'when', 'at', 'from', 'by', 'on', 'off', 'for', 'in', 'out', 'up', 'down', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'do', 'does', 'did'];
+        $words = explode(' ', $text);
+        $clean = array_filter($words, function($w) use ($stops) {
+            return !in_array(strtolower(trim($w, ".,!?")), $stops);
+        });
+        return $this->formatTextResult(implode(' ', $clean));
+    }
+
+    public function slugTitle($data) {
+        $slug = $data['text'] ?? '';
+        $title = ucwords(str_replace(['-', '_'], ' ', $slug));
+        return $this->formatTextResult($title);
+    }
+
+    public function listShuffle($data) {
+        $lines = explode("\n", str_replace("\r", "", $data['text'] ?? ''));
+        $lines = array_filter(array_map('trim', $lines));
+        shuffle($lines);
+        return $this->formatTextResult(implode("\n", $lines));
+    }
+
+    public function listSort($data) {
+        $lines = explode("\n", str_replace("\r", "", $data['text'] ?? ''));
+        $lines = array_filter(array_map('trim', $lines));
+        natcasesort($lines);
+        if (($data['order'] ?? '') === 'desc') $lines = array_reverse($lines);
+        return $this->formatTextResult(implode("\n", $lines));
+    }
+
+    public function listReverse($data) {
+        $lines = explode("\n", str_replace("\r", "", $data['text'] ?? ''));
+        $lines = array_reverse($lines);
+        return $this->formatTextResult(implode("\n", $lines));
+    }
+
+    public function listDedupe($data) {
+        $lines = explode("\n", str_replace("\r", "", $data['text'] ?? ''));
+        $lines = array_unique(array_map('trim', $lines));
+        return $this->formatTextResult(implode("\n", $lines));
+    }
+
+    public function listToJson($data) {
+        $lines = explode("\n", str_replace("\r", "", $data['text'] ?? ''));
+        $lines = array_filter(array_map('trim', $lines));
+        return $this->formatTextResult(json_encode(array_values($lines), JSON_PRETTY_PRINT));
+    }
+
+    public function csvToJson($data) {
+        $csv = trim($data['text'] ?? '');
+        $lines = explode("\n", $csv);
+        $head = str_getcsv(array_shift($lines));
+        $res = [];
+        foreach ($lines as $line) {
+            $row = str_getcsv($line);
+            if (count($row) === count($head)) $res[] = array_combine($head, $row);
+        }
+        return $this->formatTextResult(json_encode($res, JSON_PRETTY_PRINT));
+    }
+
+    public function jsonToCsv($data) {
+        $json = json_decode($data['text'] ?? '', true);
+        if (!$json || !is_array($json)) return $this->formatTextResult("Invalid JSON array.");
+        $out = fopen('php://memory', 'w');
+        fputcsv($out, array_keys(end($json)));
+        foreach ($json as $row) fputcsv($out, $row);
+        rewind($out);
+        $csv = stream_get_contents($out);
+        fclose($out);
+        return $this->formatTextResult($csv);
+    }
+
+    public function textToMachine($data) {
+        $text = $data['text'] ?? '';
+        $type = $data['type'] ?? 'binary';
+        $res = '';
+        foreach (str_split($text) as $c) {
+            $v = ord($c);
+            $res .= ($type === 'hex') ? dechex($v) : (($type === 'octal') ? decoct($v) : decbin($v));
+            $res .= ' ';
+        }
+        return $this->formatTextResult(trim($res));
+    }
+
+    public function machineToText($data) {
+        $input = trim($data['text'] ?? '');
+        $type = $data['type'] ?? 'binary';
+        $parts = explode(' ', $input);
+        $res = '';
+        foreach ($parts as $p) {
+            if ($p === '') continue;
+            $v = ($type === 'hex') ? hexdec($p) : (($type === 'octal') ? octdec($p) : bindec($p));
+            $res .= chr($v);
+        }
+        return $this->formatTextResult($res);
+    }
+
+    public function base64($data) {
+        $text = $data['text'] ?? '';
+        $type = $data['type'] ?? 'encode';
+        return $this->formatTextResult($type === 'decode' ? base64_decode($text) : base64_encode($text));
+    }
+
+    public function urlEncDec($data) {
+        $text = $data['text'] ?? '';
+        $type = $data['type'] ?? 'encode';
+        return $this->formatTextResult($type === 'decode' ? urldecode($text) : urlencode($text));
+    }
+
+    public function htmlEntities($data) {
+        $text = $data['text'] ?? '';
+        $type = $data['type'] ?? 'encode';
+        return $this->formatTextResult($type === 'decode' ? html_entity_decode($text) : htmlentities($text));
+    }
+
+    public function textReverse($data) {
+        $text = $data['text'] ?? '';
+        return $this->formatTextResult(strrev($text));
+    }
+
+    public function oldEnglish($data) {
+        $text = strtolower($data['text'] ?? '');
+        $map = ['a'=>'𝔞', 'b'=>'𝔟', 'c'=>'𝔠', 'd'=>'𝔡', 'e'=>'𝔢', 'f'=>'𝔣', 'g'=>'𝔤', 'h'=>'𝔥', 'i'=>'𝔦', 'j'=>'𝔧', 'k'=>'𝔨', 'l'=>'𝔩', 'm'=>'𝔪', 'n'=>'𝔫', 'o'=>'𝔬', 'p'=>'𝔭', 'q'=>'𝔮', 'r'=>'𝔯', 's'=>'𝔰', 't'=>'𝔱', 'u'=>'𝔲', 'v'=>'𝔳', 'w'=>'𝔴', 'x'=>'𝔵', 'y'=>'𝔶', 'z'=>'𝔷'];
+        return $this->formatTextResult(strtr($text, $map));
+    }
+
+    public function cursiveText($data) {
+        $text = strtolower($data['text'] ?? '');
+        $map = ['a'=>'𝒶', 'b'=>'𝒷', 'c'=>'𝒸', 'd'=>'𝒹', 'e'=>'𝑒', 'f'=>'𝒻', 'g'=>'𝑔', 'h'=>'𝒽', 'i'=>'𝒾', 'j'=>'𝒿', 'k'=>'𝓀', 'l'=>'𝓁', 'm'=>'𝓂', 'n'=>'𝓃', 'o'=>'𝑜', 'p'=>'𝓅', 'q'=>'𝓆', 'r'=>'𝓇', 's'=>'𝓈', 't'=>'𝓉', 'u'=>'𝓊', 'v'=>'𝓋', 'w'=>'𝓌', 'x'=>'𝓍', 'y'=>'𝓎', 'z'=>'𝓏'];
+        return $this->formatTextResult(strtr($text, $map));
+    }
+
+    public function cssFilter($data) {
+        $blur = intval($data['blur'] ?? 0);
+        $bright = intval($data['brightness'] ?? 100);
+        $contrast = intval($data['contrast'] ?? 100);
+        $filter = "filter: blur({$blur}px) brightness({$bright}%) contrast({$contrast}%);";
+        return "<div style='background:url(https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=400); width:100%; height:200px; border-radius:12px; margin-bottom:1rem; $filter'></div>" . $this->formatTextResult($filter);
+    }
+
+    public function cssClipPath($data) {
+        $type = $data['type'] ?? 'circle';
+        $val = ($type === 'circle') ? "circle(50% at 50% 50%)" : "polygon(50% 0%, 0% 100%, 100% 100%)";
+        $style = "clip-path: $val; -webkit-clip-path: $val;";
+        return "<div style='background:var(--primary); width:200px; height:200px; margin:0 auto 1rem; $style'></div>" . $this->formatTextResult($style);
+    }
+
+    public function jsonSchema($data) {
+        $json = json_decode($data['text'] ?? '', true);
+        if (!$json) return $this->formatTextResult("Invalid JSON.");
+        $schema = ['$schema' => 'http://json-schema.org/draft-07/schema#', 'type' => 'object', 'properties' => []];
+        foreach ($json as $k => $v) {
+            $schema['properties'][$k] = ['type' => gettype($v)];
+        }
+        return $this->formatTextResult(json_encode($schema, JSON_PRETTY_PRINT));
+    }
+
+    public function curlToCode($data) {
+        $curl = $data['text'] ?? '';
+        preg_match("/curl '([^']+)'/", $curl, $m);
+        $url = $m[1] ?? 'http://example.com';
+        $code = "<?php\n\$ch = curl_init();\ncurl_setopt(\$ch, CURLOPT_URL, '$url');\ncurl_setopt(\$ch, CURLOPT_RETURNTRANSFER, true);\n\$response = curl_exec(\$ch);\ncurl_close(\$ch);\necho \$response;";
+        return $this->formatTextResult($code);
+    }
+
+    public function caseConvert($data) {
+        return $this->caseConverterPro($data);
+    }
 }

@@ -1,87 +1,113 @@
 <?php
+// app/controllers/ToolController.php
 class ToolController extends Controller {
-    
-    public function handle() {
-        $slug = $_GET['tool_slug'] ?? null;
-        if (!$slug) {
-            $this->notFound();
+    public function show($slug) {
+        $registryPath = CONFIG . DS . 'tools_registry.php';
+        $allTools = file_exists($registryPath) ? require $registryPath : [];
+
+        if (!isset($allTools[$slug])) {
+            http_response_code(404);
+            echo "Tool not found: " . htmlspecialchars($slug);
             return;
         }
 
-        $registry = require CONFIG . DS . 'tools_registry.php';
-        if (!isset($registry[$slug])) {
-            $this->notFound();
-            return;
-        }
-
-        $tool = $registry[$slug];
+        $tool = $allTools[$slug];
         $tool['slug'] = $slug;
 
-        // If AJAX POST
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // If the tool is frontend-only, we skip backend logic
-            if (isset($tool['is_frontend_only']) && $tool['is_frontend_only']) {
-                echo "<div style='color:var(--primary); font-weight:bold;'>Frontend tool - No server-side processing required.</div>";
-                exit;
+        // Get related tools (same category, excluding current)
+        $relatedTools = [];
+        $count = 0;
+        foreach ($allTools as $rSlug => $rTool) {
+            if ($rSlug !== $slug && ($rTool['category'] ?? '') === ($tool['category'] ?? '') && $count < 4) {
+                $relatedTools[$rSlug] = $rTool;
+                $count++;
             }
-
-            ob_start();
-            try {
-                $handlerClass = $tool['handler'];
-                $action = $tool['action'];
-                
-                $handlerPath = APP . DS . 'models' . DS . $handlerClass . '.php';
-                if (file_exists($handlerPath)) {
-                    require_once $handlerPath;
-                    $handler = new $handlerClass();
-                    
-                    if (method_exists($handler, $action)) {
-                        $result = $handler->$action($_POST, $_FILES);
-                        ob_end_clean(); // Discard any accidental output
-                        
-                        if (is_array($result)) {
-                            $this->jsonResponse($result);
-                        } else {
-                            echo $result;
-                        }
-                    } else {
-                        throw new Exception("Handler action not found: $action");
-                    }
-                } else {
-                    throw new Exception("Handler file not found: $handlerClass");
-                }
-            } catch (Throwable $e) {
-                ob_end_clean();
-                $this->jsonResponse([
-                    'status' => 'error',
-                    'message' => 'Server Error: ' . $e->getMessage()
-                ]);
-            }
-            exit;
         }
 
-        // Render Page
-        $meta_title = $tool['title'] . ' - Free Online Tool';
-        $meta_description = !empty($tool['desc']) ? $tool['desc'] : "Use our free online {$tool['title']} tool.";
-        
-        $data = [
-            'meta_title' => $meta_title,
-            'meta_description' => $meta_description,
-            'canonical_url' => URL_ROOT . '/' . $slug,
-            'tool' => $tool
-        ];
+        $pageTitle = $tool['title'];
+        $pageDesc  = $tool['desc'] ?? '';
 
-        // Specific view check or dynamic fallback
-        if (file_exists(APP . DS . 'views' . DS . 'tools' . DS . $slug . '.php')) {
-            $this->view('tools/' . $slug, $data);
+        $data = [
+            'pageTitle'    => $pageTitle,
+            'pageDesc'     => $pageDesc,
+            'tool'         => $tool,
+            'relatedTools' => $relatedTools,
+        ];
+        $this->view('tool', $data);
+    }
+
+    public function process($slug) {
+        // POST processing - delegate to the existing DynamicToolController or handle inline
+        $registryPath = CONFIG . DS . 'tools_registry.php';
+        $allTools = file_exists($registryPath) ? require $registryPath : [];
+
+        if (!isset($allTools[$slug])) {
+            $this->jsonResponse(['status' => 'error', 'message' => 'Tool not found'], 404);
+            return;
+        }
+
+        $tool = $allTools[$slug];
+        $controllerName = $tool['controller'] ?? 'DynamicToolController';
+        
+        if (file_exists(APP . DS . 'controllers' . DS . $controllerName . '.php')) {
+            require_once APP . DS . 'controllers' . DS . $controllerName . '.php';
+            $_GET['tool_slug'] = $slug;
+            $controller = new $controllerName();
+            $controller->handle();
         } else {
-            $this->view('tools/dynamic-tool', $data);
+            $this->jsonResponse(['status' => 'error', 'message' => 'Handler not found'], 500);
         }
     }
 
-    public function notFound() {
-        http_response_code(404);
-        echo "404 - Tool Not Found";
-        exit;
+    /**
+     * The core handler that connects the registry to the models
+     */
+    public function handle() {
+        $slug = $_GET['tool_slug'] ?? '';
+        $registryPath = CONFIG . DS . 'tools_registry.php';
+        $allTools = file_exists($registryPath) ? require $registryPath : [];
+
+        if (!isset($allTools[$slug])) {
+            $this->jsonResponse(['status' => 'error', 'message' => 'Tool configuration missing'], 404);
+        }
+
+        $tool = $allTools[$slug];
+        $handlerName = $tool['handler'] ?? '';
+        $actionName = $tool['action'] ?? '';
+
+        if (!$handlerName || !$actionName) {
+            $this->jsonResponse(['status' => 'error', 'message' => 'Tool logic not defined or missing action'], 500);
+        }
+
+        $handlerPath = APP . DS . 'models' . DS . $handlerName . '.php';
+        if (!file_exists($handlerPath)) {
+            $this->jsonResponse(['status' => 'error', 'message' => "Handler $handlerName not found"], 500);
+        }
+
+        require_once APP . DS . 'models' . DS . 'AiHandler.php'; // Some tools might need these
+        require_once $handlerPath;
+        
+        if (!class_exists($handlerName)) {
+            $this->jsonResponse(['status' => 'error', 'message' => "Class $handlerName not found"], 500);
+        }
+
+        $handler = new $handlerName();
+        
+        if ($actionName === 'noop' || !method_exists($handler, $actionName)) {
+            $this->jsonResponse(['status' => 'error', 'message' => "Development in progress: Action '$actionName' is currently being implemented for $handlerName."], 200);
+        }
+
+        // Combine POST and FILES for the handler
+        $data = array_merge($_POST, $_FILES);
+        
+        try {
+            $result = $handler->$actionName($data);
+            $this->jsonResponse([
+                'status' => 'success',
+                'result' => $result
+            ]);
+        } catch (Throwable $e) {
+            $this->jsonResponse(['status' => 'error', 'message' => 'Execution error: ' . $e->getMessage()], 500);
+        }
     }
 }

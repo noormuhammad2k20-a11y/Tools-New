@@ -85,20 +85,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (response.ok) {
                     const html = await response.text();
+                    let finalHtml = html;
 
-                    // Premium Handle: Check if the response is secretly a JSON payload for a file download
+                    // Premium Handle: Check if the response is secretly a JSON payload
                     try {
                         const jsonResponse = JSON.parse(html);
-                        if (jsonResponse.status === 'success' && jsonResponse.download_url) {
-                            showToast('File processed successfully! Downloading...', 'success');
-                            window.location.href = jsonResponse.download_url;
-                            return;
+                        if (jsonResponse.status === 'success') {
+                            if (jsonResponse.download_url) {
+                                showToast('File processed successfully! Downloading...', 'success');
+                                window.location.href = jsonResponse.download_url;
+                                return;
+                            }
+                            if (jsonResponse.result) {
+                                finalHtml = jsonResponse.result;
+                            }
                         }
                     } catch (e) {
                         // Not JSON, continue treating as HTML
                     }
 
-                    resultContainer.innerHTML = html;
+                    resultContainer.innerHTML = finalHtml;
 
                     // Execute scripts found in the response
                     const scripts = resultContainer.querySelectorAll('script');

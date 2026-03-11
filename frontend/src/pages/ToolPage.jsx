@@ -70,22 +70,47 @@ const ToolPage = () => {
     window.scrollTo(0, 0);
   }, [slug]);
 
+  // Real-time processing for specific tools
+  useEffect(() => {
+    if (isToolFrontendReady(slug) && tool && tool.inputs && tool.inputs.some(i => i.type === 'textarea')) {
+      const form = document.getElementById("toolForm");
+      if (!form) return;
+
+      const handleInput = async () => {
+        const formData = new FormData(form);
+        const hasValue = Array.from(formData.values()).some(v => v && v.toString().trim() !== "");
+        
+        if (hasValue) {
+          try {
+            const localResult = await executeToolLocally(slug, formData);
+            if (localResult) setResult(localResult);
+          } catch (err) {
+            console.error("Local processing error:", err);
+          }
+        } else {
+          setResult(null);
+        }
+      };
+
+      form.addEventListener('input', handleInput);
+      return () => form.removeEventListener('input', handleInput);
+    }
+  }, [slug, tool]);
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
     setProcessing(true);
     setError(null);
     setResult(null);
 
-    const formData = new FormData(e.target);
+    const form = e ? e.target : document.getElementById("toolForm");
+    const formData = new FormData(form);
 
     try {
-      // Logic shift: Check if tool is handled locally
       if (isToolFrontendReady(slug)) {
-        // executeToolLocally is async to allow for "Corporate Tech" deliberate latency or complex worker logic
         const localResult = await executeToolLocally(slug, formData);
         setResult(localResult);
       } else {
-        // Fallback to server-side for tools not yet migrated
         const response = await fetch(window.location.href, {
           method: 'POST',
           body: formData,
@@ -105,10 +130,8 @@ const ToolPage = () => {
         }
       }
     } catch (err) {
-      setError(err.message || "Something went wrong during local processing.");
+      setError(err.message || "Execution failed. Please check input parameters.");
     } finally {
-      // Artificial delay for "Thinking" state if the result was instant
-      // This maintains the "High Performance Infrastructure" feel
       setTimeout(() => setProcessing(false), 200);
     }
   };
@@ -124,9 +147,9 @@ const ToolPage = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <Loader2 className="w-8 h-8 text-primary animate-spin" strokeWidth={3} />
-        <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Initialising Environment...</div>
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4 bg-white">
+        <Loader2 className="w-6 h-6 text-zinc-300 animate-spin" strokeWidth={2} />
+        <div className="text-[10px] font-medium text-zinc-400 uppercase tracking-[0.2em]">Initialising Component...</div>
       </div>
     );
   }
@@ -134,10 +157,10 @@ const ToolPage = () => {
   if (error && !tool) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-6 text-center bg-white">
-        <Terminal className="w-12 h-12 text-slate-200 mb-6" strokeWidth={1} />
-        <h2 className="text-xl font-bold text-slate-900 uppercase tracking-tighter mb-2">Resource failure</h2>
-        <p className="text-slate-500 mb-8 max-w-xs text-xs font-medium uppercase tracking-widest">{error}</p>
-        <Link to="/" className="pro-btn-solid h-12 px-8">
+        <Terminal className="w-12 h-12 text-zinc-200 mb-6" strokeWidth={1} />
+        <h2 className="text-xl font-bold text-zinc-900 tracking-tight mb-2">Resource Error</h2>
+        <p className="text-zinc-500 mb-8 max-w-xs text-sm">{error}</p>
+        <Link to="/" className="px-6 py-2.5 bg-zinc-900 text-white text-sm font-semibold rounded-md hover:bg-zinc-800 transition-colors">
           Return to Dashboard
         </Link>
       </div>
@@ -145,58 +168,62 @@ const ToolPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Dynamic Tool Header */}
-      <header className="bg-slate-50/50 border-b border-slate-100 pt-20 pb-16 px-10">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-12">
-          <div className="flex-1">
-            <div className="flex items-center gap-2 mb-8">
-              <Link to="/" className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-colors">Directory</Link>
-              <ChevronRight className="w-3 h-3 text-slate-300" />
-              <span className="text-[10px] font-bold text-primary uppercase tracking-widest">{tool.category.replace(/-/g, ' ')}</span>
-            </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 uppercase tracking-tighter leading-[0.9] mb-6">
-              {tool.title}
-            </h1>
-            <p className="text-slate-500 font-medium max-w-2xl text-lg leading-relaxed">
-              {tool.desc}
-            </p>
+    <div className="bg-white">
+      {/* Tool Header */}
+      <header className="bg-white border-b border-zinc-200 py-16 px-8 md:px-12">
+        <div className="max-w-5xl">
+          <div className="flex items-center gap-2 mb-8">
+            <Link to="/" className="text-[10px] font-bold text-zinc-400 uppercase tracking-[0.2em] hover:text-zinc-900 transition-colors">Infrastructure</Link>
+            <ChevronRight className="w-3 h-3 text-zinc-300" />
+            <span className="text-[10px] font-bold text-zinc-900 uppercase tracking-[0.2em] px-2 py-0.5 bg-zinc-100 rounded">{tool.category.replace(/-/g, ' ')}</span>
           </div>
           
-          <div className="hidden lg:flex items-center gap-8 pb-4">
-            <div className="text-right">
-                <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 opacity-60">Optimisation</div>
-                <div className="text-xs font-bold text-slate-900">v4.2.1-STABLE</div>
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10">
+            <div className="max-w-2xl text-left">
+              <h1 className="text-3xl md:text-4xl font-bold text-zinc-900 tracking-tight mb-4">
+                {tool.title}
+              </h1>
+              <p className="text-zinc-500 text-base md:text-lg leading-relaxed max-w-xl font-medium">
+                {tool.desc}
+              </p>
             </div>
-            <div className="w-[1px] h-10 bg-slate-200" />
-            <div className="text-right">
-                <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 opacity-60">Status</div>
-                <div className="flex items-center gap-1.5 justify-end">
-                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    <div className="text-xs font-bold text-emerald-500 uppercase tracking-wider">Optimal</div>
+            
+            <div className="flex items-center gap-8 pb-1">
+              <div className="text-left">
+                <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5 leading-none">Kernel Version</p>
+                <p className="text-xs font-bold text-zinc-900 leading-none tracking-tight">V2.4 Stable</p>
+              </div>
+              <div className="w-px h-8 bg-zinc-200" />
+              <div className="text-left">
+                <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5 leading-none">Security Protocol</p>
+                <div className="flex items-center gap-2 leading-none">
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  <p className="text-xs font-bold text-zinc-900 tracking-tight">Isolated</p>
                 </div>
+              </div>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Workspace */}
-      <main className="max-w-7xl mx-auto px-10 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-stretch">
+      {/* Workspace Area */}
+      <main className="px-8 md:px-12 py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           
-          {/* Input Panel */}
-          <section className="flex flex-col pro-panel h-full bg-white">
-            <div className="p-5 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
-              <h2 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-2.5">
-                <Terminal className="w-4 h-4" strokeWidth={1.5} />
-                Input Protocol
+          {/* Input Module */}
+          <section className="bg-white border border-zinc-200 rounded-xl overflow-hidden flex flex-col shadow-sm">
+            <div className="px-6 py-4 border-b border-zinc-100 bg-zinc-50/50 flex items-center justify-between">
+              <h2 className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] flex items-center gap-2">
+                <Terminal className="w-4 h-4 text-zinc-400" />
+                Input Parameters
               </h2>
             </div>
-            <div className="flex-1 p-8">
+            
+            <div className="p-8 flex-1">
               <form id="toolForm" onSubmit={handleSubmit} className="space-y-8">
                 {(tool.inputs || []).map((input, idx) => (
-                  <div key={idx} className="space-y-3">
-                    <label className="text-[10px] font-bold text-slate-400 block uppercase tracking-widest">
+                  <div key={idx} className="space-y-2.5">
+                    <label className="text-[10px] font-bold text-zinc-900 uppercase tracking-widest block">
                       {input.label}
                     </label>
                     
@@ -205,8 +232,8 @@ const ToolPage = () => {
                         name={input.name}
                         placeholder={input.placeholder}
                         required={input.required}
-                        rows={10}
-                        className="w-full bg-slate-50/50 border border-slate-100 rounded-[4px] p-5 focus:border-slate-300 focus:bg-white focus:ring-0 outline-none transition-all font-medium text-slate-900 text-[14px] leading-relaxed placeholder:text-slate-300 resize-none"
+                        rows={12}
+                        className="w-full bg-zinc-50 border border-zinc-200 rounded-lg p-4 focus:ring-2 focus:ring-zinc-100 focus:border-zinc-300 focus:bg-white outline-none transition-all text-[13px] font-mono text-zinc-800 leading-relaxed placeholder:text-zinc-300 resize-none"
                       />
                     )}
 
@@ -216,7 +243,7 @@ const ToolPage = () => {
                         name={input.name}
                         placeholder={input.placeholder}
                         required={input.required}
-                        className="w-full bg-slate-50/50 border border-slate-100 rounded-[4px] p-4 focus:border-slate-300 focus:bg-white focus:ring-0 outline-none transition-all text-slate-900 text-sm font-medium placeholder:text-slate-300"
+                        className="w-full bg-zinc-50 border border-zinc-200 rounded-lg h-12 px-4 focus:ring-2 focus:ring-zinc-100 focus:border-zinc-300 focus:bg-white outline-none transition-all text-[13px] font-mono text-zinc-800 placeholder:text-zinc-300"
                       />
                     )}
 
@@ -226,82 +253,82 @@ const ToolPage = () => {
                         name={input.name}
                         defaultValue={input.value}
                         required={input.required}
-                        className="w-full bg-slate-50/50 border border-slate-100 rounded-[4px] p-4 focus:border-slate-300 focus:bg-white focus:ring-0 outline-none transition-all text-slate-900 text-sm font-medium"
+                        className="w-full bg-zinc-50 border border-zinc-200 rounded-lg h-12 px-4 focus:ring-2 focus:ring-zinc-100 focus:border-zinc-300 focus:bg-white outline-none transition-all text-[13px] font-mono text-zinc-800"
                       />
                     )}
 
                     {input.type === 'file' && (
-                      <div className="relative border border-dashed border-slate-200 bg-slate-50/30 rounded-[4px] p-12 text-center hover:border-slate-300 transition-all group">
+                      <div className="relative border-2 border-dashed border-zinc-200 bg-zinc-50 rounded-xl p-12 text-center transition-all group hover:border-zinc-300 hover:bg-zinc-100/50">
                         <input
                           type="file"
                           name={input.name}
                           multiple={input.multiple}
                           required={input.required}
-                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                         />
-                        <div className="text-slate-400">
-                          <Download className="w-8 h-8 mx-auto mb-4 text-slate-200 group-hover:text-slate-300 transition-colors" strokeWidth={1.5} />
-                          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Select Infrastructure Files</p>
-                          <p className="text-[10px] text-slate-300 mt-2 uppercase font-bold tracking-widest">Supports multiple batching</p>
+                        <div className="relative pointer-events-none">
+                          <Download className="w-8 h-8 mx-auto mb-4 text-zinc-300 group-hover:text-zinc-500 transition-colors" />
+                          <p className="text-xs font-bold text-zinc-900 tracking-tight">Upload System Objects</p>
+                          <p className="text-[9px] text-zinc-400 mt-2 uppercase font-bold tracking-[0.2em]">Local Processing Active</p>
                         </div>
                       </div>
                     )}
                   </div>
                 ))}
 
-                <div className="flex gap-4 pt-6">
+                <div className="flex gap-4 pt-4">
                   <button
                     type="submit"
                     disabled={processing}
-                    className="flex-1 pro-btn-solid h-14 text-sm font-bold uppercase tracking-widest group"
+                    className="flex-1 h-12 bg-zinc-900 text-white text-[11px] font-bold uppercase tracking-widest rounded-lg transition-all hover:bg-zinc-800 disabled:bg-zinc-100 disabled:text-zinc-400 active:scale-[0.98] flex items-center justify-center gap-3"
                   >
                     {processing ? (
-                      <Loader2 className="w-5 h-5 animate-spin" />
+                      <Loader2 className="w-4 h-4 animate-spin" />
                     ) : (
-                      <Zap className="w-4 h-4 transition-transform group-hover:scale-110" />
+                      <Zap size={14} fill="currentColor" />
                     )}
-                    {processing ? "Optimising Output..." : "Execute Protocol"}
+                    {processing ? "Executing..." : "Run Operation"}
                   </button>
                   <button
                     type="button"
                     onClick={() => document.getElementById("toolForm").reset()}
-                    className="pro-btn-outline w-14 h-14 p-0 flex items-center justify-center shrink-0 border-slate-200"
-                    title="Flush Buffer"
+                    className="w-12 h-12 border border-zinc-200 rounded-lg flex items-center justify-center text-zinc-400 transition-all hover:bg-red-50 hover:border-red-100 hover:text-red-500"
+                    title="Reset Module"
                   >
-                    <Trash2 className="w-5 h-5" strokeWidth={1.5} />
+                    <Trash2 size={18} />
                   </button>
                 </div>
               </form>
             </div>
           </section>
 
-          {/* Output Panel */}
-          <section className="flex flex-col pro-panel h-full bg-slate-50/20">
-            <div className="p-5 border-b border-slate-100 bg-white flex items-center justify-between">
-              <h2 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-2.5">
-                <Sparkles className="w-4 h-4" strokeWidth={1.5} />
-                Calculated Output
+          {/* Output Module */}
+          <section className="bg-zinc-50/50 border border-zinc-200 rounded-xl overflow-hidden flex flex-col shadow-sm">
+            <div className="px-6 py-4 border-b border-zinc-100 bg-white flex items-center justify-between">
+              <h2 className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-zinc-400" />
+                Generated Output
               </h2>
               {result && !error && (
-                <div className="flex gap-4">
+                <div className="flex items-center gap-4">
                   <button 
                     onClick={handleCopy}
                     className={cn(
-                      "flex items-center gap-2 transition-all font-bold text-[10px] uppercase tracking-[0.15em]",
-                      copied ? "text-emerald-500" : "text-slate-400 hover:text-slate-900"
+                      "flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest transition-colors",
+                      copied ? "text-emerald-600" : "text-zinc-400 hover:text-zinc-900"
                     )}
                   >
-                    {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" strokeWidth={2} />}
-                    {copied ? "Buffered" : "Copy"}
+                    {copied ? <Check size={14} /> : <Copy size={14} />}
+                    {copied ? "Buffer Copied" : "Copy to Clipboard"}
                   </button>
-                  <button className="text-slate-300 hover:text-red-400 transition-colors" onClick={() => setResult(null)}>
-                    <RefreshCw className="w-3.5 h-3.5" strokeWidth={2} />
+                  <button className="text-zinc-300 hover:text-zinc-900 transition-colors" onClick={() => setResult(null)}>
+                    <RefreshCw size={14} />
                   </button>
                 </div>
               )}
             </div>
             
-            <div className="flex-1 relative min-h-[500px]">
+            <div className="flex-1 relative min-h-[500px] flex flex-col">
               <AnimatePresence mode="wait">
                 {result || error ? (
                   <motion.div
@@ -309,11 +336,12 @@ const ToolPage = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="absolute inset-0 p-8 flex flex-col"
+                    transition={{ duration: 0.2 }}
+                    className="absolute inset-0 p-8 flex flex-col h-full"
                   >
                     <div className={cn(
-                      "flex-1 text-[13px] font-medium overflow-auto whitespace-pre-wrap font-mono p-8 rounded-[4px] border border-slate-100 leading-relaxed shadow-sm bg-white",
-                      error ? "text-red-500 border-red-100" : "text-slate-900"
+                      "flex-1 text-[13px] overflow-auto whitespace-pre-wrap font-mono p-8 rounded-lg border leading-[1.8] bg-white shadow-inner",
+                      error ? "text-red-500 border-red-100 bg-red-50/20" : "text-zinc-800 border-zinc-200"
                     )}>
                       {error || (typeof result === 'string' ? (
                         <div className="w-full" dangerouslySetInnerHTML={{ __html: result }} />
@@ -328,54 +356,52 @@ const ToolPage = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="absolute inset-0 flex flex-col items-center justify-center text-center p-12 select-none"
+                    className="absolute inset-0 flex flex-col items-center justify-center text-center p-12"
                   >
-                    <div className="w-20 h-20 rounded-[6px] bg-slate-50 border border-slate-100 flex items-center justify-center mb-8">
-                      <Terminal className="w-10 h-10 text-slate-200" strokeWidth={1} />
+                    <div className="w-14 h-14 rounded-xl border border-zinc-100 bg-white flex items-center justify-center mb-6 shadow-sm">
+                      <Binary className="w-6 h-6 text-zinc-200" />
                     </div>
-                    <h3 className="text-xs font-black text-slate-900 mb-3 uppercase tracking-[0.2em]">Ready for Calculation</h3>
-                    <p className="text-[10px] text-slate-400 max-w-[240px] leading-relaxed font-bold uppercase tracking-widest opacity-60">
-                      Configure protocols and execute to view standardized results.
+                    <h3 className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-2">Awaiting Parameters</h3>
+                    <p className="text-[10px] text-zinc-300 max-w-[180px] uppercase font-bold leading-relaxed tracking-wider">
+                      Populate required fields to generate results locally.
                     </p>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
 
-            <div className="p-5 border-t border-slate-100 bg-white flex items-center justify-between">
-                <div className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Session Encryption: Active</div>
-                <div className="flex items-center gap-1.5 grayscale opacity-50">
-                    <div className="w-1 h-1 rounded-full bg-slate-900" />
-                    <div className="w-1 h-1 rounded-full bg-slate-900" />
-                    <div className="w-1 h-1 rounded-full bg-slate-900" />
+            <div className="px-6 py-3.5 border-t border-zinc-100 bg-white flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest">Client Encryption: Active</p>
                 </div>
+                <div className="text-[9px] font-bold text-zinc-300 uppercase tracking-widest">Local Node v2.4</div>
             </div>
           </section>
         </div>
 
-        {/* Content Expansion */}
-        <div className="mt-40 space-y-40">
+        {/* Dynamic Context Modules */}
+        <div className="mt-32 space-y-32">
           <ToolFeatures title={tool.title} category={tool.category.replace(/-/g, ' ')} />
           <SEOArticle title={tool.title} desc={tool.desc} category={tool.category} />
           <FAQSection title={tool.title} category={tool.category} />
         </div>
 
-        {/* Related Stack */}
+        {/* Related Infrastructure */}
         {relatedTools.length > 0 && (
-          <section className="mt-40 pt-20 border-t border-slate-100">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+          <section className="mt-32 pt-20 border-t border-zinc-200">
+            <div className="flex items-center justify-between mb-12">
                  <div>
-                    <div className="text-[10px] font-black text-primary uppercase tracking-[0.3em] mb-4">Infrastructure Expansion</div>
-                    <h2 className="text-3xl md:text-4xl font-black text-slate-900 uppercase tracking-tighter leading-none">Extended Tool Stack</h2>
+                    <h2 className="text-2xl font-bold text-zinc-900 tracking-tight mb-2">Horizontal Integration</h2>
+                    <p className="text-sm text-zinc-500 font-medium">Compatible utilities within the {tool.category.replace(/-/g, ' ')} cluster.</p>
                  </div>
-                 <Link to="/" className="pro-btn-outline h-12 px-8 text-[11px] font-bold uppercase tracking-[0.15em] flex items-center gap-3">
-                    View Entire Grid
-                    <ArrowRight className="w-4 h-4" />
+                 <Link to="/" className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest hover:text-zinc-900 transition-colors flex items-center gap-2">
+                    Browse All Nodes <ArrowRight size={14} />
                  </Link>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {relatedTools.map((rt, index) => (
-                <Link key={rt.slug} to={`/tool/${rt.slug}`}>
+                <Link key={rt.slug} to={`/tool/${rt.slug}`} className="block h-full">
                   <ToolCard 
                       title={rt.title}
                       desc={rt.desc}

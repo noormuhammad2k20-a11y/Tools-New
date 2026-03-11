@@ -31,48 +31,54 @@ const FAQSection = ({ title, category }) => {
 
   return (
     <div className="section-faq mt-0">
-      <div className="flex items-center gap-3 mb-8">
-        <div className="p-2 rounded-[6px] bg-slate-50 border border-slate-100 text-slate-400">
-          <HelpCircle className="w-5 h-5" strokeWidth={1.5} />
+      <div className="flex items-center gap-3 mb-10">
+        <div className="p-2.5 rounded bg-zinc-50 border border-zinc-200 text-zinc-400 shadow-sm">
+          <HelpCircle size={18} strokeWidth={2} />
         </div>
-        <h2 className="text-xl font-bold text-slate-900 uppercase tracking-tight">Frequently Asked Questions</h2>
+        <h2 className="text-xl font-bold text-zinc-900 tracking-tight">Technical Support & FAQ</h2>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-4">
         {faqs.map((faq, index) => (
           <div 
             key={index}
             className={cn(
-               "pro-panel transition-all duration-200",
-               openIndex === index ? "border-slate-300" : "hover:border-slate-300"
+               "border transition-all duration-300 rounded-xl overflow-hidden",
+               openIndex === index ? "border-zinc-300 bg-white shadow-sm" : "border-zinc-100 bg-zinc-50/20 hover:border-zinc-200"
             )}
           >
             <button
               onClick={() => setOpenIndex(openIndex === index ? -1 : index)}
-              className="w-full flex items-center justify-between p-5 text-left focus:outline-none"
+              className="w-full flex items-center justify-between p-6 px-8 text-left focus:outline-none group"
             >
               <span className={cn(
-                "text-sm font-bold tracking-tight transition-colors",
-                openIndex === index ? "text-slate-900" : "text-slate-600"
+                "text-[14px] font-bold tracking-tight transition-colors",
+                openIndex === index ? "text-zinc-900" : "text-zinc-500 group-hover:text-zinc-900"
               )}>
                 {faq.q}
               </span>
-              <ChevronDown className={cn(
-                "w-4 h-4 text-slate-300 transition-transform duration-300 shrink-0",
-                openIndex === index ? "rotate-180 text-slate-900" : ""
-              )} />
+              <div className={cn(
+                "p-1.5 rounded-full transition-all duration-300",
+                openIndex === index ? "bg-zinc-900 text-white rotate-180" : "bg-white border border-zinc-200 text-zinc-300 group-hover:text-zinc-600"
+              )}>
+                <ChevronDown className="w-3.5 h-3.5" />
+              </div>
             </button>
             
             <div 
               className={cn(
-                "overflow-hidden transition-all duration-300 ease-in-out px-1",
-                openIndex === index ? "max-h-96 pb-5 opacity-100" : "max-h-0 opacity-0"
+                "overflow-hidden transition-all duration-300 ease-in-out",
+                openIndex === index ? "max-h-96 pb-8 opacity-100" : "max-h-0 opacity-0"
               )}
             >
-              <div className="px-4 py-3 bg-slate-50/50 rounded-[4px] mx-4 border border-slate-100/50">
-                <p className="text-slate-500 leading-relaxed text-sm font-medium">
+              <div className="px-8 pb-2">
+                <p className="text-zinc-500 leading-relaxed text-[14px] font-medium m-0">
                   {faq.a}
                 </p>
+                <div className="mt-6 pt-6 border-t border-zinc-50 flex items-center gap-3">
+                   <div className="w-1 h-1 rounded-full bg-zinc-200" />
+                   <p className="text-[9px] font-bold text-zinc-300 uppercase tracking-widest">Verified Infrastructure Documentation</p>
+                </div>
               </div>
             </div>
           </div>

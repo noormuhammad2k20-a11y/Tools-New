@@ -35,23 +35,7 @@ spl_autoload_register(function($className){
 // Load helpers
 require_once HELPERS . DS . 'tool_helper.php';
 
-// Initialize the Router
+// Initialize the Router and route the request
+// No more React SPA serving — all routes are handled by PHP
 $router = new Router($routes);
-
-// Serve React Frontend by default for UI routes
-// This allows the React app to handle the UI while keeping the PHP backend accessible for processing
-$request_uri = $_SERVER['REQUEST_URI'];
-$is_api = (strpos($request_uri, '/api/') !== false);
-$is_post = ($_SERVER['REQUEST_METHOD'] === 'POST');
-
-// If it's a GET request and not an API call, serve the React app
-if (!$is_api && !$is_post) {
-    $react_index = ROOT . DS . 'index.html';
-    if (file_exists($react_index)) {
-        require_once $react_index;
-        exit;
-    }
-}
-
-// Fallback to PHP routing for API calls, POST processing, or if React app isn't built
 $router->route();

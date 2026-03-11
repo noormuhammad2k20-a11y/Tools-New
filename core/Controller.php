@@ -3,7 +3,12 @@ class Controller {
     public function view($view, $data = []) {
         if (file_exists(APP . DS . 'views' . DS . $view . '.php')) {
             extract($data);
-            require_once APP . DS . 'views' . DS . $view . '.php';
+            // Capture view content into $content variable
+            ob_start();
+            require APP . DS . 'views' . DS . $view . '.php';
+            $content = ob_get_clean();
+            // Render inside layout
+            require APP . DS . 'views' . DS . 'layout.php';
         } else {
             die("View does not exist: $view");
         }

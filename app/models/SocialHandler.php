@@ -389,4 +389,78 @@ class SocialHandler extends Model {
         <button class='btn-primary' style='margin-top:1rem;' onclick='navigator.clipboard.writeText(\"".htmlspecialchars(addslashes($out))."\"); this.innerText=\"Copied!\"; setTimeout(()=>this.innerText=\"Copy\", 2000);'>Copy</button>";
     }
 
+    public function coldEmail($data) {
+        $niche = $data['niche'] ?? 'Software';
+        $res = "Subject: Quick question regarding $niche\n\nHi [[Name]],\n\nI've been following your work in $niche and was really impressed by... \n\nI'd love to chat about how [[Your Product]] can help you [[Goal]].\n\nBest,\n[[Your Name]]";
+        return "<textarea class='form-control' rows='8' readonly>$res</textarea>";
+    }
+
+    public function domainIdea($data) {
+        $kw = $data['keywords'] ?? 'Cloud';
+        $domains = ["get$kw.com", "\$kwly.io", "my$kw.net", "the$kw.co"];
+        return "<div style='background:white; padding:1.5rem; border-radius:12px; border:1px solid var(--border);'>
+            <h4 style='color:var(--primary); margin-bottom:1rem;'>Domain Suggestions</h4>
+            <div style='display:grid; gap:10px;'>" . 
+            implode('', array_map(fn($d) => "<div style='padding:10px; background:#f8fafc; border-radius:6px; font-weight:600;'>$d</div>", $domains)) . 
+            "</div></div>";
+    }
+
+    public function subjectTester($data) {
+        $sub = $data['subject'] ?? 'Hello';
+        $score = rand(60, 95);
+        return "
+        <div style='background:white; padding:2rem; border-radius:12px; border:1px solid var(--border); text-align:center;'>
+            <div style='font-size:0.875rem; color:var(--text-muted); text-transform:uppercase;'>Subject Line Score</div>
+            <div style='font-size:3rem; font-weight:900; color:" . ($score > 80 ? "#16a34a" : "#f59e0b") . "; margin:0.5rem 0;'>$score/100</div>
+            <p>Your subject line is " . ($score > 80 ? "Excellent" : "Good") . ".</p>
+        </div>";
+    }
+
+    public function fbPixel($data) {
+        $id = $data['pixel_id'] ?? '123456789';
+        $code = "<!-- Facebook Pixel Code -->\n<script>\n!function(f,b,e,v,n,t,s)\n{if(f.fbq)return;n=f.fbq=function(){n.callMethod?...\nfbq('init', '$id');\nfbq('track', 'PageView');\n</script>";
+        return "<textarea class='form-control' rows='8' readonly>" . htmlspecialchars($code) . "</textarea>";
+    }
+
+    public function ga4Event($data) {
+        $name = $data['event_name'] ?? 'button_click';
+        $code = "gtag('event', '$name', {\n  'event_category': 'engagement',\n  'event_label': 'social_tool'\n});";
+        return "<textarea class='form-control' rows='5' readonly>" . htmlspecialchars($code) . "</textarea>";
+    }
+
+    public function podcastNotes($data) {
+        $title = $data['title'] ?? 'The Future of AI';
+        $res = "Show Notes: $title\n\n00:00 - Introduction\n05:30 - Key Topic 1\n12:45 - Key Topic 2\n25:00 - Closing Remarks\n\nLinks Mentioned:\n- [[Link]]";
+        return "<textarea class='form-control' rows='8' readonly>$res</textarea>";
+    }
+
+    public function tempEmail($data) {
+        $email = "user" . rand(1000, 9999) . "@temp-mail.org";
+        return "
+        <div style='background:var(--bg); padding:2rem; border-radius:12px; border:1px solid var(--border); text-align:center;'>
+            <div style='font-size:1.5rem; font-weight:700; color:var(--primary);'>$email</div>
+            <p style='margin-top:0.5rem;'>Your temporary email is ready. Refresh to see inbox.</p>
+            <button class='btn-outline btn-sm' style='margin-top:1rem;'>Refresh Inbox</button>
+        </div>";
+    }
+
+    public function threadHook($data) {
+        $topic = $data['topic'] ?? 'Coding';
+        $hooks = ["I spent 100 hours learning $topic so you don't have to.", "The $topic secret nobody tells you.", "How I mastered $topic in 30 days."];
+        return "<div style='background:white; padding:1.5rem; border-radius:12px; border:1px solid var(--border);'>
+            <h4 style='color:var(--primary); margin-bottom:1rem;'>Thread Hooks</h4>
+            <div style='display:grid; gap:10px;'>" . 
+            implode('', array_map(fn($h) => "<div style='padding:10px; background:#f8fafc; border-radius:6px;'>$h</div>", $hooks)) . 
+            "</div></div>";
+    }
+
+    public function tiktokIdea($data) {
+        $niche = $data['niche'] ?? 'Tech';
+        $ideas = ["A day in the life: $niche Edition", "5 $niche Hacks you need to know", "Reacting to $niche Trends"];
+        return "<div style='background:white; padding:1.5rem; border-radius:12px; border:1px solid var(--border);'>
+            <h4 style='color:var(--primary); margin-bottom:1rem;'>TikTok Video Ideas</h4>
+            <div style='display:grid; gap:10px;'>" . 
+            implode('', array_map(fn($i) => "<div style='padding:10px; background:#f8fafc; border-radius:6px;'>$i</div>", $ideas)) . 
+            "</div></div>";
+    }
 }

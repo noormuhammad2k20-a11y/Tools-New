@@ -59,16 +59,7 @@ const CommandBar = () => {
 
   return (
     <>
-      <button 
-        onClick={() => setIsOpen(true)}
-        className="fixed top-6 right-6 flex items-center gap-3 px-4 py-2 bg-white border border-slate-200 rounded-lg text-slate-400 hover:border-slate-300 transition-all z-40 group shadow-sm"
-      >
-        <Search className="w-4 h-4 group-hover:text-slate-600 transition-colors" />
-        <span className="text-xs font-bold uppercase tracking-widest hidden md:inline">Quick Search</span>
-        <div className="flex items-center gap-1 px-1.5 py-0.5 bg-slate-50 border border-slate-100 rounded text-[10px] font-bold">
-          <Command className="w-2.5 h-2.5" /> K
-        </div>
-      </button>
+      {/* Search trigger button removed as it's now in Navbar.jsx */}
 
       <AnimatePresence>
         {isOpen && (
@@ -78,81 +69,81 @@ const CommandBar = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+              className="absolute inset-0 bg-zinc-900/60 backdrop-blur-sm"
             />
             
             <motion.div 
-              initial={{ opacity: 0, scale: 0.95, y: -20 }}
+              initial={{ opacity: 0, scale: 0.98, y: -10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: -20 }}
-              className="relative w-full max-w-xl bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden"
+              exit={{ opacity: 0, scale: 0.98, y: -10 }}
+              className="relative w-full max-w-xl bg-white rounded-xl shadow-2xl border border-zinc-200 overflow-hidden"
             >
-              <div className="flex items-center px-4 py-3 border-b border-slate-100">
-                <Search className="w-5 h-5 text-slate-400 mr-3" strokeWidth={1.5} />
+              <div className="flex items-center px-5 py-4 border-b border-zinc-100">
+                <Search className="w-5 h-5 text-zinc-400 mr-4" strokeWidth={2} />
                 <input 
                   autoFocus
-                  placeholder="Type to search tools..."
-                  className="flex-1 bg-transparent border-none outline-none text-slate-900 text-sm font-medium placeholder:text-slate-300"
+                  placeholder="Infrastructure search..."
+                  className="flex-1 bg-transparent border-none outline-none text-zinc-900 text-sm font-bold placeholder:text-zinc-300"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                 />
                 <button 
                   onClick={() => setIsOpen(false)}
-                  className="p-1 rounded-md hover:bg-slate-50 text-slate-400"
+                  className="p-1 px-1.5 border border-zinc-200 rounded hover:bg-zinc-50 text-zinc-400 font-bold text-[10px] uppercase tracking-widest transition-colors"
                 >
-                  <X className="w-4 h-4" />
+                  ESC
                 </button>
               </div>
 
-              <div className="p-2 max-h-[400px] overflow-auto">
+              <div className="p-2 max-h-[420px] overflow-auto bg-white">
                 {filteredTools.length > 0 ? (
                   <div className="space-y-1">
-                    <p className="px-3 py-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Tools Found</p>
+                    <p className="px-4 py-3 text-[9px] font-bold text-zinc-400 uppercase tracking-[0.25em]">Validated Resources</p>
                     {filteredTools.map((tool) => (
                       <button
                         key={tool.slug}
                         onClick={() => handleSelect(tool.slug)}
-                        className="w-full flex items-center justify-between px-3 py-3 rounded-lg hover:bg-slate-50 transition-colors group text-left"
+                        className="w-full flex items-center justify-between px-4 py-3 rounded-lg hover:bg-zinc-50 transition-all group text-left border border-transparent hover:border-zinc-100"
                       >
-                        <div className="flex items-center gap-3">
-                          <div className="p-2 rounded bg-slate-100 text-slate-400 group-hover:text-primary transition-colors">
-                            <FileText className="w-4 h-4" strokeWidth={1.5} />
+                        <div className="flex items-center gap-4">
+                          <div className="p-2.5 rounded bg-zinc-50 text-zinc-400 group-hover:text-zinc-900 group-hover:bg-zinc-100 transition-all border border-zinc-100">
+                            <FileText className="w-4 h-4" />
                           </div>
                           <div>
-                            <p className="text-sm font-bold text-slate-900">{tool.title}</p>
-                            <p className="text-xs text-slate-400 line-clamp-1">{tool.desc}</p>
+                            <p className="text-sm font-bold text-zinc-900 leading-tight">{tool.title}</p>
+                            <p className="text-[11px] text-zinc-400 font-medium line-clamp-1 mt-1 uppercase tracking-wider">{tool.category.replace(/-/g, ' ')}</p>
                           </div>
                         </div>
-                        <ArrowRight className="w-4 h-4 text-slate-300 opacity-0 group-hover:opacity-100 transition-all mr-2" />
+                        <ArrowRight className="w-4 h-4 text-zinc-200 group-hover:text-zinc-900 group-hover:translate-x-1 transition-all" />
                       </button>
                     ))}
                   </div>
                 ) : query.trim() !== "" ? (
-                   <div className="py-12 text-center">
-                      <Search className="w-10 h-10 text-slate-100 mx-auto mb-4" strokeWidth={1} />
-                      <p className="text-sm font-bold text-slate-900 uppercase tracking-wide">No tools found</p>
-                      <p className="text-xs text-slate-400 mt-1">Try another keyword</p>
+                   <div className="py-20 text-center">
+                      <Search className="w-12 h-12 text-zinc-100 mx-auto mb-4" strokeWidth={1} />
+                      <p className="text-xs font-bold text-zinc-900 uppercase tracking-widest">No matching nodes</p>
+                      <p className="text-[10px] text-zinc-400 mt-2 uppercase font-bold tracking-widest">Awaiting valid query</p>
                    </div>
                 ) : (
-                  <div className="py-12 text-center">
-                    <Command className="w-10 h-10 text-slate-100 mx-auto mb-4" strokeWidth={1} />
-                    <p className="text-sm font-bold text-slate-900 uppercase tracking-wide">Start typing to search</p>
-                    <p className="text-xs text-slate-400 mt-1">Find the right tool for your task</p>
+                  <div className="py-20 text-center">
+                    <Command className="w-12 h-12 text-zinc-100 mx-auto mb-4" strokeWidth={1} />
+                    <p className="text-xs font-bold text-zinc-900 uppercase tracking-widest">System Search</p>
+                    <p className="text-[10px] text-zinc-400 mt-2 uppercase font-bold tracking-widest">Input identifier to locate resource</p>
                   </div>
                 )}
               </div>
 
-              <div className="px-4 py-2 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                   <div className="flex items-center gap-1 text-[10px] font-bold text-slate-400">
-                     <span className="p-0.5 border border-slate-200 rounded bg-white px-1">ESC</span> to close
+              <div className="px-5 py-3 bg-zinc-50 border-t border-zinc-100 flex items-center justify-between">
+                <div className="flex items-center gap-6">
+                   <div className="flex items-center gap-2 text-[9px] font-bold text-zinc-400 uppercase tracking-widest">
+                     <span className="p-1 px-1.5 border border-zinc-200 rounded bg-white">ENTER</span> Select
                    </div>
-                   <div className="flex items-center gap-1 text-[10px] font-bold text-slate-400">
-                     <span className="p-0.5 border border-slate-200 rounded bg-white px-1">ENTER</span> to select
+                   <div className="flex items-center gap-2 text-[9px] font-bold text-zinc-400 uppercase tracking-widest">
+                     <span className="p-1 px-1.5 border border-zinc-200 rounded bg-white">ESC</span> Close
                    </div>
                 </div>
-                <div className="text-[10px] font-bold text-slate-300">
-                  POWERED BY TOOLMASTER
+                <div className="text-[9px] font-bold text-zinc-300 uppercase tracking-[0.2em]">
+                  NODE_ID: ARCH_SEARCH_V2
                 </div>
               </div>
             </motion.div>

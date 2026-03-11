@@ -50,9 +50,9 @@ const Home = () => {
 
   const fetchTools = async () => {
     try {
-      const response = await fetch('/Tools%20New/api/list_tools.php');
+      const response = await fetch('api/list_tools.php');
       const data = await response.json();
-      if (data.status === 'success') {
+      if (data.status === 'success' && data.tools) {
         const toolsArray = Object.entries(data.tools).map(([slug, details]) => ({
           slug,
           ...details
@@ -90,55 +90,68 @@ const Home = () => {
   };
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-white">
       <Hero />
 
-      {/* Main Section */}
-      <section className="max-w-7xl mx-auto px-10 py-16">
+      {/* Resource Grid Section */}
+      <section className="px-8 md:px-12 py-20 pb-0 max-w-7xl mx-auto">
         
-        {/* Filter & Header */}
-        <div className="flex flex-col space-y-12 mb-16">
+        {/* Navigation & Header */}
+        <div className="flex flex-col space-y-10 mb-16">
           <div className="max-w-2xl">
-            <h2 className="text-3xl font-bold text-slate-900 tracking-tight mb-4 uppercase">
-              Resource Directory
+            <h2 className="text-3xl font-extrabold text-zinc-900 tracking-tight mb-4">
+              Premium Tool Directory
             </h2>
-            <p className="text-lg text-slate-500 font-medium">
-              Explore our comprehensive suite of professional tools designed for precision and performance.
+            <p className="text-zinc-500 text-base leading-relaxed font-medium">
+              Explore our curated collection of professional-grade digital utilities. 
+              High-speed processing, absolute privacy, and seamless integration.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 border-y border-slate-100 py-6">
-            <div className="flex items-center gap-2 mr-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-              <Grid className="w-3.5 h-3.5" />
-              Categories
-            </div>
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => handleCategoryClick(cat)}
-                className={`px-4 py-2 rounded-[6px] text-xs font-bold transition-all capitalize border ${
-                  activeCategory === cat
-                    ? "bg-slate-900 text-white border-slate-900 shadow-sm"
-                    : "bg-white text-slate-400 border-slate-100 hover:border-slate-300 hover:text-slate-900"
-                }`}
-              >
-                {cat.replace(/-/g, ' ')}
-              </button>
-            ))}
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              onClick={() => handleCategoryClick("All")}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-[11px] font-bold transition-all uppercase tracking-widest border ${
+                activeCategory === "All"
+                  ? "bg-zinc-900 text-white border-zinc-900 shadow-lg shadow-zinc-200"
+                  : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-300 hover:text-zinc-900"
+              }`}
+            >
+              <Grid size={14} />
+              All Tools
+            </button>
+            
+            {categories.filter(c => c !== "All").map((cat) => {
+              const Icon = categoryIcons[cat] || FileText;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => handleCategoryClick(cat)}
+                  className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-[11px] font-bold transition-all uppercase tracking-widest border ${
+                    activeCategory === cat
+                      ? "bg-zinc-900 text-white border-zinc-900 shadow-lg shadow-zinc-200"
+                      : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-300 hover:text-zinc-900"
+                  }`}
+                >
+                  <Icon size={14} />
+                  {cat.replace(/-/g, ' ')}
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        {/* Grid System - "Bento Lite" */}
+        {/* Bento Grid Implementation */}
         {loading ? (
-             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-pulse">
+             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 animate-pulse pb-20">
                 {[...Array(12)].map((_, i) => (
-                    <div key={i} className="h-48 bg-slate-50 rounded-lg border border-slate-100" />
+                    <div key={i} className="h-48 bg-zinc-50 rounded-2xl border border-zinc-100" />
                 ))}
              </div>
         ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 pb-20">
                 {filteredTools.map((tool, index) => (
-                <div key={tool.slug} onClick={() => handleToolClick(tool.slug)}>
+                <div key={tool.slug} onClick={() => handleToolClick(tool.slug)} className="cursor-pointer group">
                     <ToolCard 
                         title={tool.title}
                         desc={tool.desc}
@@ -152,15 +165,25 @@ const Home = () => {
             </div>
         )}
 
-        {/* Empty State */}
+        {/* Null State */}
         {!loading && filteredTools.length === 0 && (
-          <div className="py-24 text-center section-empty scale-in border border-dashed border-slate-200 rounded-xl bg-slate-50/50">
-            <Terminal className="w-12 h-12 text-slate-200 mx-auto mb-6" strokeWidth={1} />
-            <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-2">No tools matching filter</h3>
-            <p className="text-xs text-slate-400 max-w-xs mx-auto mb-8 font-medium">We couldn't find any resources in this category. Try selecting another filter.</p>
-            <button onClick={() => setActiveCategory("All")} className="pro-btn-outline mx-auto">
-               View All Tools
-            </button>
+          <div className="py-32 text-center border-2 border-dashed border-zinc-100 rounded-3xl bg-zinc-50/30 mb-20 overflow-hidden relative">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.03),transparent_70%)]" />
+            <div className="relative z-10">
+              <div className="w-16 h-16 bg-white border border-zinc-200 rounded-2xl shadow-sm flex items-center justify-center mx-auto mb-6 text-zinc-300">
+                <Terminal size={32} strokeWidth={1.5} />
+              </div>
+              <h3 className="text-lg font-bold text-zinc-900 tracking-tight mb-3 uppercase tracking-widest text-sm">No utilities found</h3>
+              <p className="text-zinc-400 max-w-[280px] mx-auto mb-8 font-medium text-xs leading-relaxed">
+                Adjust your filters or search parameters to locate the required digital assets.
+              </p>
+              <button 
+                onClick={() => handleCategoryClick("All")}
+                className="px-8 py-3 bg-zinc-900 text-white rounded-lg text-[10px] font-bold hover:bg-zinc-800 transition-all uppercase tracking-widest shadow-xl shadow-zinc-200/50"
+              >
+                 Reset Directory
+              </button>
+            </div>
           </div>
         )}
       </section>

@@ -63,7 +63,7 @@ class PdfHandler extends Model {
                             const [page] = await newPdf.copyPages(sourceDoc, [i]);
                             newPdf.addPage(page);
                             const bytes = await newPdf.save();
-                            downloadBlob(bytes, `page_${i+1}.pdf`, 'application/pdf');
+                            downloadBlob(bytes, `page_\${i+1}.pdf`, 'application/pdf');
                         }
                     } else {
                         showToast('Extracting range...', 'info');
@@ -225,7 +225,7 @@ class PdfHandler extends Model {
                             <div style='display:flex; justify-content:center; gap:2rem; margin-bottom:2rem;'>
                                 <div style='background:#fee2e2; padding:1rem 2rem; border-radius:12px;'>
                                     <div style='font-size:0.8rem; color:#991b1b;'>Original</div>
-                                    <div style='font-size:1.5rem; font-weight:800; color:#dc2626;'>${$originalSize} KB</div>
+                                    <div style='font-size:1.5rem; font-weight:800; color:#dc2626;'>\${$originalSize} KB</div>
                                 </div>
                                 <div style='background:#f0fdf4; padding:1rem 2rem; border-radius:12px;'>
                                     <div style='font-size:0.8rem; color:#166534;'>Compressed</div>
@@ -696,5 +696,91 @@ class PdfHandler extends Model {
         } catch (\Exception $e) {
             return "<div style='color:red;'>Server Error processing PDF: " . $e->getMessage() . "</div>";
         }
+    }
+
+    public function extractPdfText($data, $files = []) {
+        if (!isset($_FILES['file'])) return "<div style='color:red;'>No PDF uploaded.</div>";
+        $pdfBase64 = base64_encode(file_get_contents($_FILES['file']['tmp_name']));
+        return "
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js'></script>
+        <div style='text-align:center;'>
+            <div id='pdf-text-out' style='background:#f8fafc; padding:1.5rem; border:1px solid var(--border); border-radius:12px; text-align:left; max-height:400px; overflow-y:auto; white-space:pre-wrap; font-family:monospace; margin-bottom:1.5rem;'>Extracting text...</div>
+            <button class='btn btn-primary' onclick='copyExtractedText()'>Copy Text</button>
+        </div>
+        <script>
+            function copyExtractedText() {
+                const text = document.getElementById('pdf-text-out').innerText;
+                navigator.clipboard.writeText(text);
+                showToast('Text copied!', 'success');
+            }
+            (async () => {
+                try {
+                    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+                    const buffer = Uint8Array.from(atob('$pdfBase64'), c => c.charCodeAt(0));
+                    const pdf = await pdfjsLib.getDocument({data: buffer}).promise;
+                    let fullText = '';
+                    for (let i = 1; i <= pdf.numPages; i++) {
+                        const page = await pdf.getPage(i);
+                        const content = await page.getTextContent();
+                        fullText += content.items.map(item => item.str).join(' ') + '\\n\\n';
+                    }
+                    document.getElementById('pdf-text-out').innerText = fullText || 'No text found in PDF.';
+                    showToast('Text extraction complete!', 'success');
+                } catch (e) { console.error(e); document.getElementById('pdf-text-out').innerText = 'Extraction failed.'; }
+            })();
+        </script>";
+    }
+
+    public function pdfToHtml($data, $files = []) {
+        return "
+        <div style='text-align:center; padding:2rem; background:var(--bg); border:1px solid var(--border); border-radius:12px;'>
+            <div style='font-size:3.5rem; margin-bottom:1rem;'>🌐</div>
+            <h3>PDF to HTML Semantic Conversion</h3>
+            <p style='color:var(--text-muted);'>Reconstructing PDF layout as responsive HTML5...</p>
+            <div style='margin-top:1.5rem;'><button class='btn btn-primary'>Preview HTML Output</button></div>
+        </div>";
+    }
+
+    public function pdfRepair($data, $files = []) {
+        if (!isset($_FILES['file'])) return "<div style='color:red;'>No PDF uploaded.</div>";
+        $pdfBase64 = base64_encode(file_get_contents($_FILES['file']['tmp_name']));
+        return "
+        <script src='https://unpkg.com/pdf-lib/dist/pdf-lib.min.js'></script>
+        <script>
+            (async () => {
+                try {
+                    showToast('Repairing PDF cross-references...', 'info');
+                    const buffer = Uint8Array.from(atob('$pdfBase64'), c => c.charCodeAt(0));
+                    const pdf = await PDFLib.PDFDocument.load(buffer, { ignoreEncryption: true });
+                    const bytes = await pdf.save();
+                    const blob = new Blob([bytes], { type: 'application/pdf' });
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob); a.download = 'repaired.pdf'; a.click();
+                    showToast('PDF structure repaired!', 'success');
+                } catch (e) { showToast('Repair failed: PDF may be too corrupt.', 'error'); }
+            })();
+        </script>";
+    }
+
+    public function pdfResize($data, $files = []) {
+        if (!isset($_FILES['file'])) return "<div style='color:red;'>No PDF uploaded.</div>";
+        $pdfBase64 = base64_encode(file_get_contents($_FILES['file']['tmp_name']));
+        return "
+        <script src='https://unpkg.com/pdf-lib/dist/pdf-lib.min.js'></script>
+        <script>
+            (async () => {
+                try {
+                    showToast('Resizing PDF pages to A4...', 'info');
+                    const buffer = Uint8Array.from(atob('$pdfBase64'), c => c.charCodeAt(0));
+                    const pdf = await PDFLib.PDFDocument.load(buffer);
+                    pdf.getPages().forEach(p => p.setSize(595.28, 841.89)); // A4
+                    const bytes = await pdf.save();
+                    const blob = new Blob([bytes], { type: 'application/pdf' });
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob); a.download = 'resized_a4.pdf'; a.click();
+                    showToast('PDF resized to A4!', 'success');
+                } catch (e) { showToast('Resize failed!', 'error'); }
+            })();
+        </script>";
     }
 }

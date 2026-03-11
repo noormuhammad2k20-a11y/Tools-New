@@ -5,5 +5,5 @@ RewriteBase /Tools%20New/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-# Otherwise, route everything to index.php with the url parameter
+# Otherwise, route everything to index.php
 RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
