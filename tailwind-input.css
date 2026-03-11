@@ -1,0 +1,4 @@
+@import "tailwindcss";
+@config "./tailwind.config.js";
+
+/* We use the config file for theme and content scanning to ensure reliability on Windows */

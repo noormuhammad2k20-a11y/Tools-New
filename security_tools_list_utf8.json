@@ -1,0 +1,164 @@
+﻿[
+    {
+        "slug": "md5-generator",
+        "title": "MD5 Generator (Pro)",
+        "handler": "DevHandler",
+        "action": "md5Generator"
+    },
+    {
+        "slug": "sha1-generator",
+        "title": "SHA-1 Generator (Pro)",
+        "handler": "DevHandler",
+        "action": "sha1Generator"
+    },
+    {
+        "slug": "sha256-generator",
+        "title": "SHA-256 Generator (Pro)",
+        "handler": "DevHandler",
+        "action": "sha256Generator"
+    },
+    {
+        "slug": "jwt-decoder",
+        "title": "JWT Decoder (Pro)",
+        "handler": "DevHandler",
+        "action": "jwtDecoder"
+    },
+    {
+        "slug": "bcrypt-generator",
+        "title": "Bcrypt Generator (Pro)",
+        "handler": "DevHandler",
+        "action": "bcryptGenerator"
+    },
+    {
+        "slug": "password-generator",
+        "title": "[Ultra Bst Pro] Strong Password Generator",
+        "handler": "GeneratorHandler",
+        "action": "password"
+    },
+    {
+        "slug": "bip39-seed-generator",
+        "title": "BIP39 Seed Phrase Generator (Pro)",
+        "handler": "DevHandler",
+        "action": "bip39Gen"
+    },
+    {
+        "slug": "sha512-generator",
+        "title": "SHA-512 Generator (Pro)",
+        "handler": "DevHandler",
+        "action": "sha512Generator"
+    },
+    {
+        "slug": "htpasswd-generator",
+        "title": "Htpasswd Generator",
+        "handler": "DevHandler",
+        "action": "noop"
+    },
+    {
+        "slug": "whois-lookup",
+        "title": "Whois Lookup",
+        "handler": "DevHandler",
+        "action": "noop"
+    },
+    {
+        "slug": "port-scanner",
+        "title": "Online Port Scanner",
+        "handler": "DevHandler",
+        "action": "noop"
+    },
+    {
+        "slug": "ssl-checker",
+        "title": "[Ultra Bst Pro] SSL Certificate Checker",
+        "handler": "NetworkHandler",
+        "action": "sslChecker"
+    },
+    {
+        "slug": "password-strength",
+        "title": "[Ultra Bst Pro] Password Strength Checker",
+        "handler": "NetworkHandler",
+        "action": "passwordStrength"
+    },
+    {
+        "slug": "credit-card-validator",
+        "title": "Credit Card Validator",
+        "handler": "DevHandler",
+        "action": "noop"
+    },
+    {
+        "slug": "strong-password-generator",
+        "title": "Strong Password Generator",
+        "handler": "DevHandler",
+        "action": "noop"
+    },
+    {
+        "slug": "password-strength-checker",
+        "title": "Password Strength Checker",
+        "handler": "DevHandler",
+        "action": "noop"
+    },
+    {
+        "slug": "pgp-key-generator",
+        "title": "PGP Key Generator",
+        "handler": "DevHandler",
+        "action": "noop"
+    },
+    {
+        "slug": "aes-256-encryptor",
+        "title": "AES-256 Text Encryptor",
+        "handler": "DevHandler",
+        "action": "noop"
+    },
+    {
+        "slug": "dns-leak-tester",
+        "title": "DNS Leak Tester",
+        "handler": "DevHandler",
+        "action": "noop"
+    },
+    {
+        "slug": "mac-address-lookup",
+        "title": "MAC Address Lookup",
+        "handler": "DevHandler",
+        "action": "noop"
+    },
+    {
+        "slug": "ssl-cert-generator",
+        "title": "SSL Cert Generator",
+        "handler": "DevHandler",
+        "action": "noop"
+    },
+    {
+        "slug": "email-header-analyzer",
+        "title": "Email Header Analyzer",
+        "handler": "DevHandler",
+        "action": "noop"
+    },
+    {
+        "slug": "malware-url-checker",
+        "title": "Malware URL Checker",
+        "handler": "DevHandler",
+        "action": "noop"
+    },
+    {
+        "slug": "tor-node-checker",
+        "title": "Tor Node Checker",
+        "handler": "DevHandler",
+        "action": "noop"
+    },
+    {
+        "slug": "email-breach-checker",
+        "title": "Email Breach Checker",
+        "handler": "DevHandler",
+        "action": "emailBreach"
+    },
+    {
+        "slug": "rsa-key-generator",
+        "title": "RSA Key Pair Generator (Pro)",
+        "handler": "SecurityHandler",
+        "action": "rsaKeyGenerator"
+    },
+    {
+        "slug": "file-hash-calculator",
+        "title": "File Hash Calculator (Pro)",
+        "handler": "SecurityHandler",
+        "action": "fileHashCalculator"
+    }
+]
