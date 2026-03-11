@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #4f46e5; /* Indigo 600 */
+  --color-primary-hover: #4338ca; /* Indigo 700 */
+  --color-accent: #10b981; /* Emerald 500 */
+  
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+
+  --font-sans: "Inter", "Geist", system-ui, sans-serif;
+  
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-subtle: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+:root {
+  background-color: #ffffff;
+  color: #0f172a;
+  font-family: var(--font-sans);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  @apply antialiased bg-white text-slate-900;
+}
+
+@layer utilities {
+  .pro-card {
+    @apply bg-white border border-slate-200 transition-colors duration-200;
+  }
+  
+  .pro-card:hover {
+    @apply border-slate-300;
+  }
+  
+  .pro-btn-solid {
+    @apply bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-[6px] font-medium transition-colors duration-200 flex items-center justify-center gap-2;
+  }
+
+  .pro-btn-outline {
+    @apply bg-white border border-slate-200 hover:border-slate-300 text-slate-700 px-4 py-2 rounded-[6px] font-medium transition-colors duration-200 flex items-center justify-center gap-2;
+  }
+
+  .pro-panel {
+    @apply bg-white border border-slate-200 rounded-lg overflow-hidden;
+  }
+
+  .text-hierarchy-1 { @apply text-slate-900 font-bold; }
+  .text-hierarchy-2 { @apply text-slate-800 font-semibold; }
+  .text-hierarchy-3 { @apply text-slate-600 font-medium text-sm; }
+  .text-hierarchy-4 { @apply text-slate-500 text-xs; }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 rounded-full hover:bg-slate-300 transition-colors;
+}

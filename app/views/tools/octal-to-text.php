@@ -1,0 +1,56 @@
+<?php require_once APP . DS . 'views' . DS . 'layouts' . DS . 'header.php'; ?>
+
+<!-- Slim Hero -->
+<?php require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-hero.php'; ?>
+
+<!-- Tool Interface -->
+<main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2 relative z-10 mb-16" id="tool-interface">
+    <div class="bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 p-6 sm:p-10">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            <div class="relative">
+                <label class="text-xs font-black text-gray-400 uppercase tracking-widest mb-2 block">Octal Input</label>
+                <textarea id="input-octal" class="w-full h-80 p-6 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-primary/10 transition-all duration-300 text-gray-700 text-sm placeholder-gray-400 resize-none outline-none font-mono" placeholder="110 145 154 154 157..."></textarea>
+            </div>
+
+            <div class="relative">
+                <label class="text-xs font-black text-primary uppercase tracking-widest mb-2 block">Text Result</label>
+                <textarea id="output-text" class="w-full h-80 p-6 bg-blue-50/10 border border-blue-100 rounded-2xl text-gray-900 text-lg font-bold resize-none outline-none" readonly placeholder="Decoded text..."></textarea>
+                <button id="copy-btn" class="absolute bottom-4 right-4 px-4 py-2 bg-primary text-white text-xs font-bold rounded-lg shadow-lg hover:bg-primary-hover transition-all">
+                    Copy
+                </button>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- Content Area -->
+<?php require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-content.php'; ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('input-octal');
+    const output = document.getElementById('output-text');
+
+    input.addEventListener('input', () => {
+        const val = input.value.trim();
+        if(!val) { output.value = ''; return; }
+        try {
+            output.value = val.split(/\s+/).map(o => String.fromCharCode(parseInt(o, 8))).join('');
+        } catch(e) {
+            output.value = "Invalid Octal Sequence";
+        }
+    });
+
+    document.getElementById('copy-btn').addEventListener('click', () => {
+        output.select();
+        document.execCommand('copy');
+        const original = document.getElementById('copy-btn').innerText;
+        document.getElementById('copy-btn').innerText = 'Copied!';
+        setTimeout(() => document.getElementById('copy-btn').innerText = original, 2000);
+    });
+});
+</script>
+
+<?php require_once APP . DS . 'views' . DS . 'layouts' . DS . 'footer.php'; ?>

@@ -1,0 +1,391 @@
+<?php require_once APP . DS . 'views' . DS . 'layouts' . DS . 'header.php'; ?>
+
+<!-- Slim Hero -->
+<?php require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-hero.php'; ?>
+
+<!-- Tool Interface -->
+<main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2 relative z-10 mb-16" id="tool-interface">
+    <div class="bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 p-6 sm:p-10" style="overflow: visible;">
+        <!-- Custom Tool Interface Extracted from Original File -->
+        
+        
+        <section class="tool-wrapper" aria-label="Image Resizer Tool">
+            
+
+            <!-- MODIFIED: Added specific inner wrapper IDs for replacing upload hint with preview -->
+            <div class="dropzone" id="dropzone" role="button" tabindex="0" aria-label="File Upload Dropzone">
+                <div id="dropzone-placeholder">
+                    <i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i>
+                    <h3>Drop Your File Here</h3>
+                    <p>...or click to browse from your computer</p>
+                </div>
+                <div id="dropzone-preview" style="display: none;">
+                    <img id="preview-image" src="" alt="Image Preview" style="max-height: 200px; max-width: 100%; border-radius: 8px; margin-bottom: 1rem; box-shadow: var(--shadow);">
+                    <h3 id="preview-filename" style="margin-bottom:0.5rem; word-break: break-all;"></h3>
+                    <p id="preview-dimensions" style="font-size:0.85rem; color:var(--text-muted);"></p>
+                </div>
+                <input type="file" id="fileInput" hidden accept="image/*">
+            </div>
+
+            <div class="controls-grid">
+                <div class="input-group">
+                    <label for="preset-select">Quick Presets</label>
+                    <select id="preset-select">
+                        <option value="custom">Custom Size</option>
+                        <option value="1080x1080">Instagram Post (1080x1080)</option>
+                        <option value="820x312">Facebook Cover (820x312)</option>
+                        <option value="1280x720">YouTube Thumbnail (1280x720)</option>
+                    </select>
+                </div>
+                <!-- MODIFIED: Changed default value to empty so it relies on the loaded image -->
+                <div class="input-group">
+                    <label for="width-input">Width (px)</label>
+                    <input type="number" id="width-input" placeholder="e.g. 800" value="">
+                </div>
+                <div class="input-group">
+                    <label for="height-input">Height (px)</label>
+                    <input type="number" id="height-input" placeholder="e.g. 600" value="">
+                </div>
+            </div>
+
+            <label class="aspect-ratio" for="aspect-ratio-checkbox">
+                <input type="checkbox" id="aspect-ratio-checkbox" checked> Keep Aspect Ratio <i class="fa-solid fa-link" aria-hidden="true"></i>
+            </label>
+
+            <!-- MODIFIED: Added IDs to the buttons -->
+            <div class="action-btns">
+                <button class="btn-primary" id="executeBtn" aria-label="Execute Image Resize"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Execute Magic</button>
+                <button class="btn-secondary" id="resetBtn" aria-label="Reset Form">Reset Form</button>
+            </div>
+        </section>
+        
+        <!-- Other sections removed for brevity of file, but JavaScript remains below -->
+
+    
+    </div>
+</main>
+
+<!-- Content + Sidebar (SEO, FAQ) -->
+<section class="py-16 px-4 sm:px-6 lg:px-8 border-t border-gray-200 bg-white">
+    <div class="max-w-3xl mx-auto">
+        <article class="prose prose-blue prose-lg max-w-none text-gray-600 mb-12" id="seo-article-content">
+            
+            <!-- Features Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 not-prose mt-8 mb-8">
+                <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 text-center shadow-sm">
+                    <div class="w-12 h-12 bg-white text-primary rounded-full flex items-center justify-center text-xl mx-auto mb-4 border border-gray-100"><i class="fa-solid fa-bolt"></i></div>
+                    <h4 class="font-bold text-gray-900 mb-2">Lightning Fast</h4>
+                    <p class="text-sm text-gray-500">Get your results instantly without waiting or reloading.</p>
+                </div>
+                <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 text-center shadow-sm">
+                    <div class="w-12 h-12 bg-white text-primary rounded-full flex items-center justify-center text-xl mx-auto mb-4 border border-gray-100"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h4 class="font-bold text-gray-900 mb-2">100% Secure</h4>
+                    <p class="text-sm text-gray-500">All data processing happens securely in your own browser.</p>
+                </div>
+                <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 text-center shadow-sm">
+                    <div class="w-12 h-12 bg-white text-primary rounded-full flex items-center justify-center text-xl mx-auto mb-4 border border-gray-100"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                    <h4 class="font-bold text-gray-900 mb-2">Easy to Use</h4>
+                    <p class="text-sm text-gray-500">No complex settings, just drop your data and execute.</p>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>
+
+<!-- Suggested Tools Strip -->
+<?php require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-suggested.php'; ?>
+
+<!-- Popular Tools Section -->
+<section class="bg-white py-16 px-4 sm:px-6 lg:px-8 border-t border-gray-100">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex items-center justify-between mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Most Popular Tools</h2>
+            <a href="<?php echo URL_ROOT; ?>" class="text-sm font-medium text-primary hover:text-primary-hover transition-colors">See All &rarr;</a>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <?php 
+            $allToolsRegistry = require CONFIG . DS . 'tools_registry.php';
+            $popularTools = array_slice($allToolsRegistry, 0, 4, true); 
+            foreach ($popularTools as $pSlug => $pTool): 
+            ?>
+            <a href="<?php echo URL_ROOT; ?>/<?php echo $pSlug; ?>" class="group bg-gray-50 border border-gray-200 rounded-xl p-5 flex gap-4 items-start hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-all duration-200">
+                <div class="flex-shrink-0 w-12 h-12 bg-white text-primary rounded-lg flex items-center justify-center text-xl group-hover:bg-primary group-hover:text-white transition-colors duration-200 shadow-sm border border-gray-100">
+                    <?php echo render_tool_icon($pTool['icon']); ?>
+                </div>
+                <div class="flex-grow min-w-0">
+                    <h3 class="text-base font-semibold text-gray-900 truncate mb-1 group-hover:text-primary transition-colors"><?php echo htmlspecialchars($pTool['title']); ?></h3>
+                    <p class="text-xs text-gray-500 line-clamp-2 leading-relaxed"><?php echo htmlspecialchars($pTool['desc']); ?></p>
+                </div>
+            </a>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+
+<style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; }
+        header { background-color: var(--card-bg); padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--text-main); text-decoration: none; }
+        .logo span { color: var(--primary); }
+        nav ul { display: flex; gap: 2rem; list-style: none; }
+        nav a { text-decoration: none; color: var(--text-muted); font-weight: 500; transition: color 0.3s; }
+        nav a:hover { color: var(--primary); }
+        .btn-primary { background-color: var(--primary); color: white; padding: 0.6rem 1.5rem; border-radius: 50px; text-decoration: none; font-weight: 600; border: none; cursor: pointer; transition: background 0.3s, transform 0.2s; }
+        .btn-primary:hover { background-color: var(--primary-hover); transform: translateY(-2px); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 3rem 20px; }
+        .tool-wrapper { background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow-lg); padding: 2.5rem; margin-bottom: 4rem; }
+        .tool-header { display: flex; align-items: center; gap: 15px; margin-bottom: 2rem; }
+        .tool-icon { background: #eff6ff; color: var(--primary); padding: 15px; border-radius: 10px; font-size: 1.5rem; }
+        .tool-header h1 { font-size: 1.8rem; margin-bottom: 0.2rem; }
+        .tool-header p { color: var(--text-muted); font-size: 0.95rem; }
+        .dropzone { border: 2px dashed #cbd5e1; background-color: #f8fafc; border-radius: var(--radius); padding: 4rem 2rem; text-align: center; cursor: pointer; transition: all 0.3s; margin-bottom: 2rem; }
+        .dropzone:hover, .dropzone.active { border-color: var(--primary); background-color: #eff6ff; }
+        .dropzone i { font-size: 3rem; color: #94a3b8; margin-bottom: 1rem; }
+        .dropzone h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .dropzone p { color: var(--text-muted); font-size: 0.9rem; }
+        .controls-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .input-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main); }
+        .input-group input, .input-group select { width: 100%; padding: 0.8rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; outline: none; transition: border-color 0.3s; }
+        .input-group input:focus, .input-group select:focus { border-color: var(--primary); }
+        .aspect-ratio { display: flex; align-items: center; gap: 10px; background: #f1f5f9; padding: 0.8rem 1.2rem; border-radius: 8px; width: max-content; margin-bottom: 2rem; font-size: 0.9rem; font-weight: 500; }
+        .action-btns { display: flex; gap: 1rem; }
+        .btn-secondary { background-color: transparent; color: var(--text-main); border: 1px solid var(--border-color); padding: 0.6rem 1.5rem; border-radius: 50px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .btn-secondary:hover { background-color: #f1f5f9; }
+    </style>
+
+<script>
+        // DOM Elements
+        const dropzone = document.getElementById('dropzone');
+        const dropzonePlaceholder = document.getElementById('dropzone-placeholder');
+        const dropzonePreview = document.getElementById('dropzone-preview');
+        const previewImage = document.getElementById('preview-image');
+        const previewFilename = document.getElementById('preview-filename');
+        const previewDimensions = document.getElementById('preview-dimensions');
+        const fileInput = document.getElementById('fileInput');
+
+        const widthInput = document.getElementById('width-input');
+        const heightInput = document.getElementById('height-input');
+        const presetSelect = document.getElementById('preset-select');
+        const aspectRatioCheckbox = document.getElementById('aspect-ratio-checkbox');
+        
+        const executeBtn = document.getElementById('executeBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        // Global State
+        let originalImageObj = null;
+        let originalFile = null;
+        let originalWidth = 0;
+        let originalHeight = 0;
+        let originalRatio = 1;
+
+        // --- 1. File Upload & Preview Logic ---
+        dropzone.addEventListener('click', () => {
+            if (!originalImageObj) fileInput.click();
+        });
+
+        dropzone.addEventListener('keydown', (e) => {
+            if ((e.key === 'Enter' || e.key === ' ') && !originalImageObj) {
+                e.preventDefault();
+                fileInput.click();
+            }
+        });
+
+        dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            if (!originalImageObj) dropzone.classList.add('active');
+        });
+
+        dropzone.addEventListener('dragleave', () => {
+            dropzone.classList.remove('active');
+        });
+
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('active');
+            if (e.dataTransfer.files.length && !originalImageObj) {
+                fileInput.files = e.dataTransfer.files;
+                handleFile(e.dataTransfer.files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', function() {
+            if (this.files.length) {
+                handleFile(this.files[0]);
+            }
+        });
+
+        function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+                alert('Please select a valid image file. (e.g. JPG, PNG, WEBP)');
+                return;
+            }
+
+            originalFile = file;
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    originalImageObj = img;
+                    originalWidth = img.width;
+                    originalHeight = img.height;
+                    originalRatio = originalWidth / originalHeight;
+
+                    // Setup Inputs
+                    widthInput.value = originalWidth;
+                    heightInput.value = originalHeight;
+                    presetSelect.value = "custom";
+
+                    // Setup Preview UI
+                    previewImage.src = e.target.result;
+                    previewFilename.textContent = file.name;
+                    previewDimensions.textContent = `Original: ${originalWidth}px × ${originalHeight}px`;
+
+                    dropzonePlaceholder.style.display = 'none';
+                    dropzonePreview.style.display = 'block';
+                    dropzone.style.cursor = 'default';
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // --- 2. Dimension & Aspect Ratio Logic ---
+        let isUpdating = false; // Prevent infinite loops
+
+        widthInput.addEventListener('input', () => {
+            if (isUpdating || !aspectRatioCheckbox.checked || !originalImageObj) return;
+            isUpdating = true;
+            const w = parseInt(widthInput.value) || 0;
+            heightInput.value = Math.round(w / originalRatio);
+            presetSelect.value = "custom";
+            isUpdating = false;
+        });
+
+        heightInput.addEventListener('input', () => {
+            if (isUpdating || !aspectRatioCheckbox.checked || !originalImageObj) return;
+            isUpdating = true;
+            const h = parseInt(heightInput.value) || 0;
+            widthInput.value = Math.round(h * originalRatio);
+            presetSelect.value = "custom";
+            isUpdating = false;
+        });
+
+        aspectRatioCheckbox.addEventListener('change', () => {
+            if (aspectRatioCheckbox.checked && originalImageObj) {
+                isUpdating = true;
+                const w = parseInt(widthInput.value) || originalWidth;
+                heightInput.value = Math.round(w / originalRatio);
+                isUpdating = false;
+            }
+        });
+
+        // --- 3. Quick Presets Logic ---
+        presetSelect.addEventListener('change', () => {
+            if (!originalImageObj) {
+                alert('Please upload an image first.');
+                presetSelect.value = "custom";
+                return;
+            }
+            
+            const val = presetSelect.value;
+            if (val !== 'custom') {
+                const [w, h] = val.split('x').map(Number);
+                isUpdating = true; // Briefly disable aspect lock to force preset
+                widthInput.value = w;
+                heightInput.value = h;
+                // If Aspect Ratio is forced on, we disable it visually so users know preset changed proportions
+                if (aspectRatioCheckbox.checked && Math.abs((w/h) - originalRatio) > 0.01) {
+                    aspectRatioCheckbox.checked = false;
+                }
+                isUpdating = false;
+            }
+        });
+
+        // --- 4. Execute & Download via Canvas ---
+        executeBtn.addEventListener('click', () => {
+            if (!originalImageObj) {
+                alert("Please upload an image to resize.");
+                return;
+            }
+
+            const targetW = parseInt(widthInput.value);
+            const targetH = parseInt(heightInput.value);
+
+            if (!targetW || !targetH || targetW < 1 || targetH < 1) {
+                alert("Please enter valid positive dimensions.");
+                return;
+            }
+
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            canvas.width = targetW;
+            canvas.height = targetH;
+
+            // Draw resized image
+            // We draw the original image stretched to the exact canvas dimensions requested.
+            ctx.drawImage(originalImageObj, 0, 0, targetW, targetH);
+
+            // Determine mime type from original file, default to jpeg
+            let mimeType = originalFile.type;
+            if (mimeType !== 'image/png' && mimeType !== 'image/webp') {
+                mimeType = 'image/jpeg';
+            }
+
+            // Export Canvas
+            const dataUrl = canvas.toDataURL(mimeType, 0.92);
+
+            // Trigger Download
+            const link = document.createElement('a');
+            const extension = mimeType.split('/')[1];
+            const originalNameWithoutExt = originalFile.name.substring(0, originalFile.name.lastIndexOf('.')) || "image";
+            
+            link.download = `${originalNameWithoutExt}-resized.${extension}`;
+            link.href = dataUrl;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+
+        // --- 5. Reset Form Logic ---
+        resetBtn.addEventListener('click', () => {
+            originalImageObj = null;
+            originalFile = null;
+            originalWidth = 0;
+            originalHeight = 0;
+            originalRatio = 1;
+
+            fileInput.value = "";
+            widthInput.value = "";
+            heightInput.value = "";
+            presetSelect.value = "custom";
+            aspectRatioCheckbox.checked = true;
+
+            previewImage.src = "";
+            previewFilename.textContent = "";
+            previewDimensions.textContent = "";
+            
+            dropzonePreview.style.display = 'none';
+            dropzonePlaceholder.style.display = 'block';
+            dropzone.style.cursor = 'pointer';
+        });
+    </script>
+
+
+<?php require_once APP . DS . 'views' . DS . 'layouts' . DS . 'footer.php'; ?>
