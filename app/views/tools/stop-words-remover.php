@@ -1,10 +1,10 @@
-<?php require_once APP . DS . 'views' . DS . 'layouts' . DS . 'header.php'; ?>
+
 
 <!-- Slim Hero -->
-<?php require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-hero.php'; ?>
+
 
 <!-- Tool Interface -->
-<main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2 relative z-10 mb-16" id="tool-interface">
+
     <div class="bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 p-6 sm:p-10">
         <!-- Custom Tool Interface Extracted from Original File -->
         
@@ -64,100 +64,27 @@
             </div>
         
     </div>
-</main>
+
 
 <!-- Content + Sidebar (SEO, FAQ) -->
-<section class="py-16 px-4 sm:px-6 lg:px-8 border-t border-gray-200 bg-white">
-    <div class="max-w-3xl mx-auto">
-        <article class="prose prose-blue prose-lg max-w-none text-gray-600 mb-12">
+<div id="unique-article-content" class="article-content">
             <h2 class="text-2xl font-bold text-gray-900 mb-4 tracking-tight">NLP Essentials: The Role of Stop Words Removal</h2>
                     
                     <div class="seo-section mb-5">
                         <p class="lead">In the fields of search engine optimization and machine learning, text needs to be "distilled" to its most meaningful components. Our <strong>Stop Words Remover</strong> is a specialized utility that filters out common glue words—such as "the," "is," "and," and "in"—which carry little information but high frequency. By removing these, you allow algorithms (and readers) to focus on the semantic core of your text.</p>
-            <!-- Features Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 not-prose mt-8 mb-8">
-                <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 text-center shadow-sm">
-                    <div class="w-12 h-12 bg-white text-primary rounded-full flex items-center justify-center text-xl mx-auto mb-4 border border-gray-100"><i class="fa-solid fa-bolt"></i></div>
-                    <h4 class="font-bold text-gray-900 mb-2">Lightning Fast</h4>
-                    <p class="text-sm text-gray-500">Get your results instantly without waiting or reloading.</p>
-                </div>
-                <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 text-center shadow-sm">
-                    <div class="w-12 h-12 bg-white text-primary rounded-full flex items-center justify-center text-xl mx-auto mb-4 border border-gray-100"><i class="fa-solid fa-shield-halved"></i></div>
-                    <h4 class="font-bold text-gray-900 mb-2">100% Secure</h4>
-                    <p class="text-sm text-gray-500">All data processing happens securely in your own browser.</p>
-                </div>
-                <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 text-center shadow-sm">
-                    <div class="w-12 h-12 bg-white text-primary rounded-full flex items-center justify-center text-xl mx-auto mb-4 border border-gray-100"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-                    <h4 class="font-bold text-gray-900 mb-2">Easy to Use</h4>
-                    <p class="text-sm text-gray-500">No complex settings, just drop your data and execute.</p>
-                </div>
-            </div>
-                        <p>Whether you're creating a word cloud, training an AI model, or optimizing URL slugs, removing stop words is a standard first step in professional text processing pipeline.</p>
-                    </div>
-
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">What are Stop Words?</h3>
-                    <p>Stop words are the most common words in any language. They provide the grammatical framework of a sentence but often act as "noise" when performing statistical analysis. In English, words like "a," "an," "be," and "to" account for a significant percentage of any text body. Eliminating them reduces the dimensionality of your data without sacrificing the primary meaning.</p>
-
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Why Remove Them for SEO?</h3>
-                    <p>When search engines index pages, they often give more weight to nouns, verbs, and unique adjectives. Excessively wordy subheadlines or meta descriptions filled with stop words can dilute your primary keyword density. Using a remover tool helps you identify the "Keyword Essence" of your content, ensuring that your most important terms stand out.</p>
-
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Professional Applications</h3>
-                    <ul>
-                        <li><strong>Content Analysis:</strong> Identify which topics your article is *truly* about by looking at the remaining high-frequency words.</li>
-                        <li><strong>Slug Optimization:</strong> Create shorter, more punchy URLs by removing unnecessary filler words from your titles.</li>
-                        <li><strong>Sentiment Analysis:</strong> Pre-process data for machine learning models to improve prediction accuracy by removing insignificant tokens.</li>
-                        <li><strong>Memory Efficiency:</strong> Reduce the size of text indexes in search databases by up to 20-30%.</li>
-                    </ul>
-
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Global Language Support</h3>
-                    <p>Different languages have different stop word patterns. Our tool supports multiple major languages, including Spanish, French, German, and Italian. Each preset uses a curated list of linguistic "noise" unique to that tongue, providing a localized cleaning experience.</p>
-
-                    <hr class="my-5">
-
-                    <h4 class="fw-bold mb-4">FAQ: Data Cleaning and Filtering</h4>
-                    <div class="accordion" id="faqAccordion">
-                        <div class="group bg-gray-50 border border-gray-200 rounded-xl overflow-hidden mb-4 shadow-sm">
-                            <summary class="flex items-center justify-between cursor-pointer p-5 font-semibold text-gray-900">Will removing stop words change the meaning of my text?<span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down text-gray-400"></i></span></summary>
-                            <div class="px-5 pb-5 text-gray-600 text-sm leading-relaxed border-t border-gray-100 pt-3">Grammatically, the text will no longer be "correct" in a human-readable sense, but the semantic keywords (the main ideas) will remain intact. It is primarily for data analysis, not for final publishing.</div>
-                        </div>
+            
                         <div class="group bg-gray-50 border border-gray-200 rounded-xl overflow-hidden mb-4 shadow-sm">
                             <summary class="flex items-center justify-between cursor-pointer p-5 font-semibold text-gray-900">Can I add my own words to the list?<span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down text-gray-400"></i></span></summary>
                             <div class="px-5 pb-5 text-gray-600 text-sm leading-relaxed border-t border-gray-100 pt-3">Yes! You can enter additional words in the "Custom" field to filter out specific jargon or brand names that you consider "noise" for your particular project.</div>
                         </div>
                     </div>
-        </article>
-    </div>
-</section>
+        </div>
 
 <!-- Suggested Tools Strip -->
-<?php require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-suggested.php'; ?>
+
 
 <!-- Popular Tools Section -->
-<section class="bg-white py-16 px-4 sm:px-6 lg:px-8 border-t border-gray-100">
-    <div class="max-w-7xl mx-auto">
-        <div class="flex items-center justify-between mb-8">
-            <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Most Popular Tools</h2>
-            <a href="<?php echo URL_ROOT; ?>" class="text-sm font-medium text-primary hover:text-primary-hover transition-colors">See All &rarr;</a>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <?php 
-            $allToolsRegistry = require CONFIG . DS . 'tools_registry.php';
-            $popularTools = array_slice($allToolsRegistry, 0, 4, true); 
-            foreach ($popularTools as $pSlug => $pTool): 
-            ?>
-            <a href="<?php echo URL_ROOT; ?>/<?php echo $pSlug; ?>" class="group bg-gray-50 border border-gray-200 rounded-xl p-5 flex gap-4 items-start hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-all duration-200">
-                <div class="flex-shrink-0 w-12 h-12 bg-white text-primary rounded-lg flex items-center justify-center text-xl group-hover:bg-primary group-hover:text-white transition-colors duration-200 shadow-sm border border-gray-100">
-                    <?php echo render_tool_icon($pTool['icon']); ?>
-                </div>
-                <div class="flex-grow min-w-0">
-                    <h3 class="text-base font-semibold text-gray-900 truncate mb-1 group-hover:text-primary transition-colors"><?php echo htmlspecialchars($pTool['title']); ?></h3>
-                    <p class="text-xs text-gray-500 line-clamp-2 leading-relaxed"><?php echo htmlspecialchars($pTool['desc']); ?></p>
-                </div>
-            </a>
-            <?php endforeach; ?>
-        </div>
-    </div>
-</section>
+
 
 <script type="application/ld+json">
 {
@@ -254,4 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 
-<?php require_once APP . DS . 'views' . DS . 'layouts' . DS . 'footer.php'; ?>
+
+
+
+

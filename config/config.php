@@ -6,8 +6,15 @@ define('DB_PASS', '');
 define('DB_NAME', 'multitools');
 
 // Assuming XAMPP root running on localhost:
-// If "Tools New" is a subfolder:
-define('URL_ROOT', 'http://localhost/Tools%20New'); 
+// Dynamically determine the URL_ROOT to handle spaces and environment variations
+$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
+$host = $_SERVER['HTTP_HOST'];
+$scriptName = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
+// Ensure we handle cases where scriptName is / or empty
+$baseUrl = rtrim($scriptName, '/');
+$urlRoot = $protocol . "://" . $host . $baseUrl;
+
+define('URL_ROOT', $urlRoot); 
 define('SITE_TITLE', 'Professional Multi-Tools - 1000+ Free Online Tools');
 
 /**

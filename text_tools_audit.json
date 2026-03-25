@@ -1,0 +1,793 @@
+[
+    {
+        "slug": "word-counter-pro",
+        "title": "Word Counter Pro",
+        "desc": "Advanced text metrics including reading time, syllable count and keyword density.",
+        "file": "app\/views\/tools\/word-counter-pro.php",
+        "exists": false
+    },
+    {
+        "slug": "uppercase-converter",
+        "title": "Uppercase Converter",
+        "desc": "Convert any text to ALL UPPERCASE letters instantly. Great for headlines and emphasis.",
+        "file": "app\/views\/tools\/uppercase-converter.php",
+        "exists": true
+    },
+    {
+        "slug": "lowercase-converter",
+        "title": "Lowercase Converter",
+        "desc": "Convert completely capitalized text into lowercase format easily.",
+        "file": "app\/views\/tools\/lowercase-converter.php",
+        "exists": true
+    },
+    {
+        "slug": "reverse-text",
+        "title": "Reverse Text Generator",
+        "desc": "Mirror and reverse any text string from end to start.",
+        "file": "app\/views\/tools\/reverse-text.php",
+        "exists": false
+    },
+    {
+        "slug": "remove-extra-spaces",
+        "title": "Remove Extra Spaces",
+        "desc": "Clean up messy text by removing duplicate spaces and trim leading\/trailing empty space.",
+        "file": "app\/views\/tools\/remove-extra-spaces.php",
+        "exists": true
+    },
+    {
+        "slug": "ai-content-summarizer",
+        "title": "AI Content Summarizer",
+        "desc": "Condense long articles and documents into concise, readable summaries.",
+        "file": "app\/views\/tools\/ai-content-summarizer.php",
+        "exists": false
+    },
+    {
+        "slug": "ai-youtube-script-generator",
+        "title": "AI YouTube Script Generator",
+        "desc": "Create engaging video scripts with hook, body, and call-to-action sections.",
+        "file": "app\/views\/tools\/ai-youtube-script-generator.php",
+        "exists": false
+    },
+    {
+        "slug": "ai-text-humanizer",
+        "title": "AI Text Humanizer",
+        "desc": "Analyze and suggest edits to make AI text sound more human.",
+        "file": "app\/views\/tools\/ai-text-humanizer.php",
+        "exists": false
+    },
+    {
+        "slug": "ai-paraphraser",
+        "title": "AI Paraphraser",
+        "desc": "Rewrite sentences and paragraphs while maintaining the original meaning.",
+        "file": "app\/views\/tools\/ai-paraphraser.php",
+        "exists": false
+    },
+    {
+        "slug": "chatgpt-mega-prompt-generator",
+        "title": "ChatGPT Mega Prompt Generator",
+        "desc": "Create ultra-detailed prompts for better AI responses.",
+        "file": "app\/views\/tools\/chatgpt-mega-prompt-generator.php",
+        "exists": false
+    },
+    {
+        "slug": "midjourney-prompt-generator",
+        "title": "Midjourney Prompt Generator",
+        "desc": "Generate detailed descriptive prompts for AI image creation.",
+        "file": "app\/views\/tools\/midjourney-prompt-generator.php",
+        "exists": false
+    },
+    {
+        "slug": "ai-image-upscaler",
+        "title": "AI Image Upscaler",
+        "desc": "Enhance image quality and resolution using advanced AI models.",
+        "file": "app\/views\/tools\/ai-image-upscaler.php",
+        "exists": false
+    },
+    {
+        "slug": "palindrome-checker",
+        "title": "Palindrome Checker",
+        "desc": "Identify if a word, phrase, or sentence reads the same backward as forward.",
+        "file": "app\/views\/tools\/palindrome-checker.php",
+        "exists": true
+    },
+    {
+        "slug": "character-frequency-analyzer",
+        "title": "Character Frequency Analyzer",
+        "desc": "Detailed breakdown of how often each character appears in your text.",
+        "file": "app\/views\/tools\/character-frequency-analyzer.php",
+        "exists": true
+    },
+    {
+        "slug": "sentence-length-analyzer",
+        "title": "Sentence Length Analyzer",
+        "desc": "Measure the length of individual sentences to gauge readability and flow.",
+        "file": "app\/views\/tools\/sentence-length-analyzer.php",
+        "exists": true
+    },
+    {
+        "slug": "word-length-analyzer",
+        "title": "Word Length Analyzer",
+        "desc": "Analyze the distribution of word lengths throughout your document.",
+        "file": "app\/views\/tools\/word-length-analyzer.php",
+        "exists": true
+    },
+    {
+        "slug": "random-word-generator",
+        "title": "Random Word Generator",
+        "desc": "Generate a list of random words for brainstorming or creative writing.",
+        "file": "app\/views\/tools\/random-word-generator.php",
+        "exists": true
+    },
+    {
+        "slug": "random-paragraph-generator",
+        "title": "Random Paragraph Generator",
+        "desc": "Create random paragraphs of text to use as placeholders or inspiration.",
+        "file": "app\/views\/tools\/random-paragraph-generator.php",
+        "exists": true
+    },
+    {
+        "slug": "random-letter-generator",
+        "title": "Random Letter Generator",
+        "desc": "Generate random individual letters or sequences.",
+        "file": "app\/views\/tools\/random-letter-generator.php",
+        "exists": true
+    },
+    {
+        "slug": "text-column-formatter",
+        "title": "Text Column Formatter",
+        "desc": "Format plain text into neatly aligned columns.",
+        "file": "app\/views\/tools\/text-column-formatter.php",
+        "exists": true
+    },
+    {
+        "slug": "whitespace-visualizer",
+        "title": "Whitespace Visualizer",
+        "desc": "See invisible characters like spaces, tabs, and line breaks.",
+        "file": "app\/views\/tools\/whitespace-visualizer.php",
+        "exists": true
+    },
+    {
+        "slug": "unicode-inspector",
+        "title": "Unicode Inspector",
+        "desc": "Inspect the underlying Unicode values of every character in your text.",
+        "file": "app\/views\/tools\/unicode-inspector.php",
+        "exists": true
+    },
+    {
+        "slug": "stop-words-remover",
+        "title": "Stop Words Remover",
+        "desc": "Clean your text by removing common words like \"the\", \"and\", and \"is\".",
+        "file": "app\/views\/tools\/stop-words-remover.php",
+        "exists": true
+    },
+    {
+        "slug": "slug-to-title-converter",
+        "title": "Slug to Title Converter",
+        "desc": "Convert URL-friendly slugs back into readable titles.",
+        "file": "app\/views\/tools\/slug-to-title-converter.php",
+        "exists": true
+    },
+    {
+        "slug": "list-randomizer",
+        "title": "List Randomizer",
+        "desc": "Shuffle the items in any list to create a random order.",
+        "file": "app\/views\/tools\/list-randomizer.php",
+        "exists": true
+    },
+    {
+        "slug": "list-sorter",
+        "title": "List Sorter",
+        "desc": "Sort text lines A to Z ascending alphabetically or numerically.",
+        "file": "app\/views\/tools\/list-sorter.php",
+        "exists": true
+    },
+    {
+        "slug": "list-reverse-tool",
+        "title": "List Reverse Tool",
+        "desc": "Invert the order of items in any given list.",
+        "file": "app\/views\/tools\/list-reverse-tool.php",
+        "exists": true
+    },
+    {
+        "slug": "list-deduplicator",
+        "title": "List Deduplicator",
+        "desc": "Instantly remove duplicate items from any list or collection.",
+        "file": "app\/views\/tools\/list-deduplicator.php",
+        "exists": true
+    },
+    {
+        "slug": "list-to-json-converter",
+        "title": "List to JSON Converter",
+        "desc": "Transform plain line-separated lists into structured JSON arrays.",
+        "file": "app\/views\/tools\/list-to-json-converter.php",
+        "exists": true
+    },
+    {
+        "slug": "csv-to-json-converter",
+        "title": "CSV to JSON Converter",
+        "desc": "Convert tabulated CSV data into structured JSON objects.",
+        "file": "app\/views\/tools\/csv-to-json-converter.php",
+        "exists": true
+    },
+    {
+        "slug": "json-to-csv-converter",
+        "title": "JSON to CSV Converter",
+        "desc": "Convert nested JSON data arrays into standard CSV format.",
+        "file": "app\/views\/tools\/json-to-csv-converter.php",
+        "exists": true
+    },
+    {
+        "slug": "case-converter",
+        "title": "Case Converter Pro",
+        "desc": "Switch between common programming and writing cases instantly.",
+        "file": "app\/views\/tools\/case-converter.php",
+        "exists": true
+    },
+    {
+        "slug": "lorem-ipsum-generator",
+        "title": "Lorem Ipsum Generator",
+        "desc": "Create custom dummy text for your design mockups with flexible options.",
+        "file": "app\/views\/tools\/lorem-ipsum-generator.php",
+        "exists": true
+    },
+    {
+        "slug": "text-to-binary-hex",
+        "title": "Text to Binary\/Hex\/Octal",
+        "desc": "Encode text into machine-readable binary, hex, or octal strings.",
+        "file": "app\/views\/tools\/text-to-binary-hex.php",
+        "exists": true
+    },
+    {
+        "slug": "binary-hex-to-text",
+        "title": "Binary\/Hex to Text",
+        "desc": "Decode machine data (Binary, Hex, Octal) back to human-readable text.",
+        "file": "app\/views\/tools\/binary-hex-to-text.php",
+        "exists": true
+    },
+    {
+        "slug": "base64-encoder-decoder",
+        "title": "Base64 Encoder\/Decoder",
+        "desc": "Convert text to Base64 format and back, with URL-safe support.",
+        "file": "app\/views\/tools\/base64-encoder-decoder.php",
+        "exists": true
+    },
+    {
+        "slug": "url-encoder-decoder",
+        "title": "URL Encoder\/Decoder",
+        "desc": "Precisely encode or decode URL parameters for web compatibility.",
+        "file": "app\/views\/tools\/url-encoder-decoder.php",
+        "exists": true
+    },
+    {
+        "slug": "html-entity-encoder-decoder",
+        "title": "HTML Entity Encoder\/Decoder",
+        "desc": "Convert special characters to HTML entities for security and rendering.",
+        "file": "app\/views\/tools\/html-entity-encoder-decoder.php",
+        "exists": true
+    },
+    {
+        "slug": "text-reverser",
+        "title": "Text Reverser Pro",
+        "desc": "Instantly flip characters, words, or lines for creative styling.",
+        "file": "app\/views\/tools\/text-reverser.php",
+        "exists": true
+    },
+    {
+        "slug": "old-english-text",
+        "title": "Old English Text Generator",
+        "desc": "Transform modern text into majestic Gothic and Fraktur styles.",
+        "file": "app\/views\/tools\/old-english-text.php",
+        "exists": true
+    },
+    {
+        "slug": "cursive-text-generator",
+        "title": "Cursive Text Generator",
+        "desc": "Convert standard text into elegant script and calligraphy styles.",
+        "file": "app\/views\/tools\/cursive-text-generator.php",
+        "exists": true
+    },
+    {
+        "slug": "grammar-checker-pro",
+        "title": "Grammar Checker PRO",
+        "desc": "Advanced AI-powered style and grammar analysis for professional writing.",
+        "file": "app\/views\/tools\/grammar-checker-pro.php",
+        "exists": false
+    },
+    {
+        "slug": "advanced-sentiment-analyzer",
+        "title": "Sentiment Analyzer",
+        "desc": "Deep linguistic analysis to detect emotional tone and intensity of text.",
+        "file": "app\/views\/tools\/advanced-sentiment-analyzer.php",
+        "exists": false
+    },
+    {
+        "slug": "readability-hub-pro",
+        "title": "Readability Score",
+        "desc": "Comprehensive scoring using Flesch-Kincaid and Gunning Fog indexes.",
+        "file": "app\/views\/tools\/readability-hub-pro.php",
+        "exists": false
+    },
+    {
+        "slug": "keyword-density-checker-seo",
+        "title": "Keyword Density",
+        "desc": "SEO-focused n-gram analyzer for 1, 2, and 3-word phrase frequency.",
+        "file": "app\/views\/tools\/keyword-density-checker-seo.php",
+        "exists": false
+    },
+    {
+        "slug": "case-converter-premium",
+        "title": "Case Converter PRO",
+        "desc": "Switch between common programming and writing cases instantly.",
+        "file": "app\/views\/tools\/case-converter-premium.php",
+        "exists": false
+    },
+    {
+        "slug": "line-counter",
+        "title": "Line Counter",
+        "desc": "Count the exact number of lines in a given text document.",
+        "file": "app\/views\/tools\/line-counter.php",
+        "exists": true
+    },
+    {
+        "slug": "vowel-counter",
+        "title": "Vowel Counter",
+        "desc": "Count total vowels (A, E, I, O, U) inside a string.",
+        "file": "app\/views\/tools\/vowel-counter.php",
+        "exists": true
+    },
+    {
+        "slug": "consonant-counter",
+        "title": "Consonant Counter",
+        "desc": "Count absolute number of consonants in a string.",
+        "file": "app\/views\/tools\/consonant-counter.php",
+        "exists": true
+    },
+    {
+        "slug": "syllable-counter",
+        "title": "Syllable Counter",
+        "desc": "Estimate the number of syllables in an English text block.",
+        "file": "app\/views\/tools\/syllable-counter.php",
+        "exists": true
+    },
+    {
+        "slug": "sentence-counter",
+        "title": "Sentence Counter",
+        "desc": "Quickly determine exactly how many sentences are in your paragraph.",
+        "file": "app\/views\/tools\/sentence-counter.php",
+        "exists": true
+    },
+    {
+        "slug": "paragraph-counter",
+        "title": "Paragraph Counter",
+        "desc": "Count the total number of paragraphs separated by line breaks.",
+        "file": "app\/views\/tools\/paragraph-counter.php",
+        "exists": true
+    },
+    {
+        "slug": "space-counter",
+        "title": "Space Counter",
+        "desc": "Find exactly how many empty spaces exist in your string.",
+        "file": "app\/views\/tools\/space-counter.php",
+        "exists": true
+    },
+    {
+        "slug": "title-case-converter",
+        "title": "Title Case",
+        "desc": "Capitalize the first letter of every word (Title Case format).",
+        "file": "app\/views\/tools\/title-case-converter.php",
+        "exists": true
+    },
+    {
+        "slug": "camel-case-converter",
+        "title": "Camel Case",
+        "desc": "Convert text to standard programmatic camelCase.",
+        "file": "app\/views\/tools\/camel-case-converter.php",
+        "exists": true
+    },
+    {
+        "slug": "snake-case-converter",
+        "title": "Snake Case",
+        "desc": "Convert text to programmatic snake_case format.",
+        "file": "app\/views\/tools\/snake-case-converter.php",
+        "exists": true
+    },
+    {
+        "slug": "pascal-case-converter",
+        "title": "Pascal Case",
+        "desc": "Convert string to standard PascalCase string representation.",
+        "file": "app\/views\/tools\/pascal-case-converter.php",
+        "exists": true
+    },
+    {
+        "slug": "kebab-case-converter",
+        "title": "Kebab Case",
+        "desc": "Parse text out into valid-url kebab-case-format.",
+        "file": "app\/views\/tools\/kebab-case-converter.php",
+        "exists": true
+    },
+    {
+        "slug": "text-sorter",
+        "title": "Text Sorter",
+        "desc": "Sort text lines A to Z ascending alphabetically.",
+        "file": "app\/views\/tools\/text-sorter.php",
+        "exists": false
+    },
+    {
+        "slug": "reverse-words",
+        "title": "Reverse Words",
+        "desc": "Reverse the order of words in a sentence structure.",
+        "file": "app\/views\/tools\/reverse-words.php",
+        "exists": true
+    },
+    {
+        "slug": "remove-empty-lines",
+        "title": "Remove Empty Lines",
+        "desc": "Filter string and completely strip all blank empty line feeds.",
+        "file": "app\/views\/tools\/remove-empty-lines.php",
+        "exists": true
+    },
+    {
+        "slug": "remove-duplicate-words",
+        "title": "Remove Duplicates",
+        "desc": "Extract a list containing only unique consecutive words.",
+        "file": "app\/views\/tools\/remove-duplicate-words.php",
+        "exists": true
+    },
+    {
+        "slug": "extract-emails",
+        "title": "Extract Emails",
+        "desc": "Find and extract all standard email addresses dumped in text.",
+        "file": "app\/views\/tools\/extract-emails.php",
+        "exists": false
+    },
+    {
+        "slug": "string-to-slug",
+        "title": "String to Slug",
+        "desc": "Convert an article title directly to an SEO-friendly URL slug.",
+        "file": "app\/views\/tools\/string-to-slug.php",
+        "exists": false
+    },
+    {
+        "slug": "markdown-to-html",
+        "title": "Markdown to HTML",
+        "desc": "Convert raw Markdown formatting instantly to HTML tags.",
+        "file": "app\/views\/tools\/markdown-to-html.php",
+        "exists": true
+    },
+    {
+        "slug": "html-to-markdown",
+        "title": "HTML to Markdown",
+        "desc": "Strip HTML tags and convert them cleanly back into raw Markdown text.",
+        "file": "app\/views\/tools\/html-to-markdown.php",
+        "exists": true
+    },
+    {
+        "slug": "text-to-binary",
+        "title": "Text to Binary",
+        "desc": "Encode regular text sequences into 0s and 1s binary code.",
+        "file": "app\/views\/tools\/text-to-binary.php",
+        "exists": true
+    },
+    {
+        "slug": "text-to-hex",
+        "title": "Text to Hexadecimal",
+        "desc": "Convert any text string into its Hexadecimal mathematical equivalent.",
+        "file": "app\/views\/tools\/text-to-hex.php",
+        "exists": true
+    },
+    {
+        "slug": "hex-to-text",
+        "title": "Hexadecimal to Text",
+        "desc": "Decode hex sequences cleanly back into standard human-readable text.",
+        "file": "app\/views\/tools\/hex-to-text.php",
+        "exists": true
+    },
+    {
+        "slug": "text-to-ascii",
+        "title": "Text to ASCII",
+        "desc": "Convert standard text strings directly into comma-separated ASCII codes.",
+        "file": "app\/views\/tools\/text-to-ascii.php",
+        "exists": true
+    },
+    {
+        "slug": "ascii-to-text",
+        "title": "ASCII to Text",
+        "desc": "Convert ASCII decimal arrays and codes back to standard text.",
+        "file": "app\/views\/tools\/ascii-to-text.php",
+        "exists": true
+    },
+    {
+        "slug": "text-to-morse",
+        "title": "Morse Code Translator",
+        "desc": "Translate standard English phonetic text into dot-dash Morse Code.",
+        "file": "app\/views\/tools\/text-to-morse.php",
+        "exists": false
+    },
+    {
+        "slug": "morse-code-decoder",
+        "title": "Morse Code Decoder",
+        "desc": "Parse incoming dot-dash Morse Code strings back into English alphabet letters.",
+        "file": "app\/views\/tools\/morse-code-decoder.php",
+        "exists": true
+    },
+    {
+        "slug": "braille-translator",
+        "title": "Pro Braille Translator",
+        "desc": "Convert English text to Braille and Braille back to English instantly.",
+        "file": "app\/views\/tools\/braille-translator.php",
+        "exists": true
+    },
+    {
+        "slug": "zalgo-text",
+        "title": "Zalgo Text Generator",
+        "desc": "Apply demonic, glitchy-looking unicode Zalgo artifacts to standard text.",
+        "file": "app\/views\/tools\/zalgo-text.php",
+        "exists": true
+    },
+    {
+        "slug": "l33t-speak",
+        "title": "L33t Speak Generator",
+        "desc": "Convert text to classic 1990s hacker elite l337 5p34k format.",
+        "file": "app\/views\/tools\/l33t-speak.php",
+        "exists": true
+    },
+    {
+        "slug": "text-repeater",
+        "title": "Text Repeater",
+        "desc": "Multiply and repeat a string of text up to 10,000 times instantly.",
+        "file": "app\/views\/tools\/text-repeater.php",
+        "exists": true
+    },
+    {
+        "slug": "text-to-octal",
+        "title": "Text to Octal",
+        "desc": "Convert standard character text arrays into Base-8 Octal format.",
+        "file": "app\/views\/tools\/text-to-octal.php",
+        "exists": true
+    },
+    {
+        "slug": "octal-to-text",
+        "title": "Octal to Text",
+        "desc": "Translate Base-8 Octal format inputs cleanly back to string text.",
+        "file": "app\/views\/tools\/octal-to-text.php",
+        "exists": true
+    },
+    {
+        "slug": "rot-13-encoder",
+        "title": "ROT13 Encoder",
+        "desc": "Apply the classic ROT13 letter-substitution cipher to standard strings.",
+        "file": "app\/views\/tools\/rot-13-encoder.php",
+        "exists": true
+    },
+    {
+        "slug": "word-scrambler",
+        "title": "Word Scrambler",
+        "desc": "Randomly shuffle and scramble letters inside all words of a text.",
+        "file": "app\/views\/tools\/word-scrambler.php",
+        "exists": true
+    },
+    {
+        "slug": "bionic-reading",
+        "title": "Bionic Reading Converter",
+        "desc": "Bionic format text by bolding the first half of words to improve reading speed.",
+        "file": "app\/views\/tools\/bionic-reading.php",
+        "exists": true
+    },
+    {
+        "slug": "readability-score",
+        "title": "Readability Score",
+        "desc": "Calculate Flesch-Kincaid readability ease to see how complex your writing is.",
+        "file": "app\/views\/tools\/readability-score.php",
+        "exists": true
+    },
+    {
+        "slug": "keyword-density",
+        "title": "Keyword Density Checker",
+        "desc": "Find which words appear most frequently in your content for SEO analysis.",
+        "file": "app\/views\/tools\/keyword-density.php",
+        "exists": false
+    },
+    {
+        "slug": "text-summarizer",
+        "title": "Text Summarizer",
+        "desc": "Generate a shorter version of your text by extracting key sentences.",
+        "file": "app\/views\/tools\/text-summarizer.php",
+        "exists": true
+    },
+    {
+        "slug": "emoji-remover",
+        "title": "Emoji Remover",
+        "desc": "Stripped away all emojs and icons from your text for a clean string.",
+        "file": "app\/views\/tools\/emoji-remover.php",
+        "exists": false
+    },
+    {
+        "slug": "invisible-char-remover",
+        "title": "Invisible Char Remover",
+        "desc": "Remove Zero Width Spaces and other hidden characters that break formatting.",
+        "file": "app\/views\/tools\/invisible-char-remover.php",
+        "exists": true
+    },
+    {
+        "slug": "random-sentence-generator",
+        "title": "Random Sentence Generator",
+        "desc": "Generate completely random sentences for creative writing or testing.",
+        "file": "app\/views\/tools\/random-sentence-generator.php",
+        "exists": true
+    },
+    {
+        "slug": "reading-time-calculator",
+        "title": "Reading Time",
+        "desc": "Estimate how long it will take to read your text at average speeds.",
+        "file": "app\/views\/tools\/reading-time-calculator.php",
+        "exists": false
+    },
+    {
+        "slug": "speaking-time-calculator",
+        "title": "Speaking Time",
+        "desc": "Estimate the duration for a speech based on word count.",
+        "file": "app\/views\/tools\/speaking-time-calculator.php",
+        "exists": false
+    },
+    {
+        "slug": "text-to-base64",
+        "title": "Text to Base64 String",
+        "desc": "Convert plain text into a Base64 encoded string.",
+        "file": "app\/views\/tools\/text-to-base64.php",
+        "exists": false
+    },
+    {
+        "slug": "text-difference-checker",
+        "title": "Text Difference (Diff)",
+        "desc": "Compare two text blocks to find additions and deletions.",
+        "file": "app\/views\/tools\/text-difference-checker.php",
+        "exists": false
+    },
+    {
+        "slug": "list-alphabetizer",
+        "title": "List Alphabetizer",
+        "desc": "Sort lists alphabetically, by length, or even randomly.",
+        "file": "app\/views\/tools\/list-alphabetizer.php",
+        "exists": false
+    },
+    {
+        "slug": "string-scrambler",
+        "title": "String Scrambler",
+        "desc": "Jumble the letters within each word while keeping the first and last intact.",
+        "file": "app\/views\/tools\/string-scrambler.php",
+        "exists": false
+    },
+    {
+        "slug": "text-to-zalgo",
+        "title": "Zalgo Text Generator",
+        "desc": "Create glitched, creepy text using diacritical marks.",
+        "file": "app\/views\/tools\/text-to-zalgo.php",
+        "exists": false
+    },
+    {
+        "slug": "upside-down-text-gen",
+        "title": "Upside Down Text",
+        "desc": "Flip your text vertically for a unique look.",
+        "file": "app\/views\/tools\/upside-down-text-gen.php",
+        "exists": false
+    },
+    {
+        "slug": "rot13-encoder-decoder",
+        "title": "ROT13 Encoder",
+        "desc": "Apply a simple Caesar cipher that replaces a letter with the 13th letter after it.",
+        "file": "app\/views\/tools\/rot13-encoder-decoder.php",
+        "exists": false
+    },
+    {
+        "slug": "text-to-morse-code",
+        "title": "Morse Code Generator",
+        "desc": "Translate text into dots and dashes of international Morse code.",
+        "file": "app\/views\/tools\/text-to-morse-code.php",
+        "exists": false
+    },
+    {
+        "slug": "paragraph-counter-tool",
+        "title": "Paragraph Counter",
+        "desc": "Count total paragraphs accurately within a long text block.",
+        "file": "app\/views\/tools\/paragraph-counter-tool.php",
+        "exists": false
+    },
+    {
+        "slug": "syllable-counter-tool",
+        "title": "Syllable Counter",
+        "desc": "Calculate syllable counts to measure text rhythm.",
+        "file": "app\/views\/tools\/syllable-counter-tool.php",
+        "exists": false
+    },
+    {
+        "slug": "vowel-consonant-count",
+        "title": "Vowel & Consonant Counter",
+        "desc": "Get a breakdown of vowels, consonants, and other characters.",
+        "file": "app\/views\/tools\/vowel-consonant-count.php",
+        "exists": false
+    },
+    {
+        "slug": "word-count-seo",
+        "title": "SEO Word Counter",
+        "desc": "Advanced word counting with density, character distribution, and meta lengths.",
+        "file": "app\/views\/tools\/word-count-seo.php",
+        "exists": false
+    },
+    {
+        "slug": "text-repeater-tool",
+        "title": "Text Repeater",
+        "desc": "Loop a string or word hundreds of times instantly.",
+        "file": "app\/views\/tools\/text-repeater-tool.php",
+        "exists": false
+    },
+    {
+        "slug": "bionic-reading-generator",
+        "title": "Bionic Reading Format",
+        "desc": "Enhance reading speed by bolding the first half of words.",
+        "file": "app\/views\/tools\/bionic-reading-generator.php",
+        "exists": false
+    },
+    {
+        "slug": "midjourney-prompt-builder",
+        "title": "Midjourney Prompt Builder",
+        "desc": "Build complex Midjourney prompts with parameters and styles.",
+        "file": "app\/views\/tools\/midjourney-prompt-builder.php",
+        "exists": true
+    },
+    {
+        "slug": "chatgpt-mega-prompt",
+        "title": "ChatGPT Mega-Prompt Generator",
+        "desc": "Generate expert-level system prompts for better AI responses.",
+        "file": "app\/views\/tools\/chatgpt-mega-prompt.php",
+        "exists": false
+    },
+    {
+        "slug": "yt-summarizer",
+        "title": "YouTube Summarizer Template",
+        "desc": "Structure your YouTube video notes into professional summaries.",
+        "file": "app\/views\/tools\/yt-summarizer.php",
+        "exists": false
+    },
+    {
+        "slug": "stable-diffusion-prompt",
+        "title": "Stable Diffusion Prompt Gen",
+        "desc": "Create detailed prompts for Stable Diffusion image generation.",
+        "file": "app\/views\/tools\/stable-diffusion-prompt.php",
+        "exists": false
+    },
+    {
+        "slug": "blog-title-generator",
+        "title": "Blog Title Generator",
+        "desc": "Generate catchy, SEO-friendly titles for your blog posts.",
+        "file": "app\/views\/tools\/blog-title-generator.php",
+        "exists": false
+    },
+    {
+        "slug": "cold-email-gen",
+        "title": "Cold Email Generator",
+        "desc": "Generate professional outreach emails tailored to your prospect.",
+        "file": "app\/views\/tools\/cold-email-gen.php",
+        "exists": false
+    },
+    {
+        "slug": "cover-letter-gen",
+        "title": "Cover Letter Generator",
+        "desc": "Create compelling cover letters for your job applications.",
+        "file": "app\/views\/tools\/cover-letter-gen.php",
+        "exists": false
+    },
+    {
+        "slug": "social-media-bio",
+        "title": "Social Media Bio Gen",
+        "desc": "Generate creative bios for Instagram, Twitter, and LinkedIn.",
+        "file": "app\/views\/tools\/social-media-bio.php",
+        "exists": false
+    },
+    {
+        "slug": "product-description-gen",
+        "title": "Product Description Gen",
+        "desc": "Generate persuasive product descriptions for e-commerce.",
+        "file": "app\/views\/tools\/product-description-gen.php",
+        "exists": false
+    }
+]

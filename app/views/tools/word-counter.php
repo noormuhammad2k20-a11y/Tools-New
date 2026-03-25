@@ -1,119 +1,100 @@
-<?php require_once APP . DS . 'views' . DS . 'layouts' . DS . 'header.php'; ?>
-
-<!-- Slim Hero -->
-<?php require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-hero.php'; ?>
-
-<!-- Tool Interface -->
-<main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2 relative z-10 mb-16" id="tool-interface">
-    <div class="bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 p-6 sm:p-10">
-        
-        <!-- Stats Grid (Top) -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div class="bg-gray-50 border border-gray-100 rounded-xl p-4 text-center">
-                <div id="stat-words" class="text-2xl font-bold text-gray-900">0</div>
-                <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-1">Words</div>
-            </div>
-            <div class="bg-gray-50 border border-gray-100 rounded-xl p-4 text-center">
-                <div id="stat-chars" class="text-2xl font-bold text-gray-900">0</div>
-                <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-1">Characters</div>
-            </div>
-            <div class="bg-gray-50 border border-gray-100 rounded-xl p-4 text-center">
-                <div id="stat-sentences" class="text-2xl font-bold text-gray-900">0</div>
-                <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-1">Sentences</div>
-            </div>
-            <div class="bg-gray-50 border border-gray-100 rounded-xl p-4 text-center">
-                <div id="stat-reading" class="text-2xl font-bold text-gray-900">0m</div>
-                <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-1">Reading Time</div>
-            </div>
-        </div>
-
-        <div class="relative mb-6">
-            <label class="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">Enter Your Text</label>
-            <textarea id="input-text" class="w-full h-64 p-5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all duration-200 text-gray-700 text-lg placeholder-gray-400 resize-none outline-none" placeholder="Start typing or paste your text here..."></textarea>
-            
-            <!-- Quick Actions Floating -->
-            <div class="absolute bottom-4 right-4 flex gap-2">
-                <button id="clear-btn" class="p-2.5 bg-white border border-gray-200 text-gray-400 hover:text-red-500 hover:border-red-100 rounded-lg shadow-sm transition-all duration-200 group" title="Clear All">
-                    <i class="fa-solid fa-trash-can transition-transform group-hover:scale-110"></i>
-                </button>
-                <button id="copy-btn" class="px-4 py-2 bg-primary text-white rounded-lg shadow-md shadow-primary/20 hover:bg-primary-hover transition-all duration-200 font-bold flex items-center gap-2 group">
-                    <i class="fa-solid fa-copy transition-transform group-hover:scale-110"></i>
-                    <span>Copy</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- Detailed Breakdown -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-            <div class="p-5 bg-blue-50/50 border border-blue-100/50 rounded-xl">
-                <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-chart-line text-blue-500"></i>
-                    Keyword Density
-                </h3>
-                <div id="keyword-list" class="space-y-3">
-                    <div class="text-gray-400 italic text-sm">Enter text to see keyword analysis...</div>
-                </div>
-            </div>
-            <div class="p-5 bg-purple-50/50 border border-purple-100/50 rounded-xl">
-                <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-microscope text-purple-500"></i>
-                    Technical Metrics
-                </h3>
-                <div class="grid grid-cols-1 gap-3 text-sm text-gray-600">
-                    <div class="flex justify-between items-center bg-white p-3 rounded-lg border border-gray-100">
-                        <span>Average Word Length</span>
-                        <span id="avg-word" class="font-bold text-gray-900">0.0</span>
-                    </div>
-                    <div class="flex justify-between items-center bg-white p-3 rounded-lg border border-gray-100">
-                        <span>Paragraph Count</span>
-                        <span id="stat-paragraphs" class="font-bold text-gray-900">0</span>
-                    </div>
-                    <div class="flex justify-between items-center bg-white p-3 rounded-lg border border-gray-100">
-                        <span>Estimated Syllables</span>
-                        <span id="stat-syllables" class="font-bold text-gray-900">0</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+<!-- Word Counter Specialized Interface -->
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px;">
+    <div class="react-card" style="padding: 16px; text-align: center; border-radius: 12px; background: #f8fafc; border: 1px solid #e2e8f0;">
+        <div id="stat-words" style="font-size: 24px; font-weight: 800; color: #2563eb;">0</div>
+        <div class="modern-label" style="margin: 4px 0 0; font-size: 10px;">Words</div>
     </div>
-</main>
+    <div class="react-card" style="padding: 16px; text-align: center; border-radius: 12px; background: #f8fafc; border: 1px solid #e2e8f0;">
+        <div id="stat-chars" style="font-size: 24px; font-weight: 800; color: #7c3aed;">0</div>
+        <div class="modern-label" style="margin: 4px 0 0; font-size: 10px;">Characters</div>
+    </div>
+    <div class="react-card" style="padding: 16px; text-align: center; border-radius: 12px; background: #f8fafc; border: 1px solid #e2e8f0;">
+        <div id="stat-sentences" style="font-size: 24px; font-weight: 800; color: #0f172a;">0</div>
+        <div class="modern-label" style="margin: 4px 0 0; font-size: 10px;">Sentences</div>
+    </div>
+    <div class="react-card" style="padding: 16px; text-align: center; border-radius: 12px; background: #f8fafc; border: 1px solid #e2e8f0;">
+        <div id="stat-reading" style="font-size: 24px; font-weight: 800; color: #059669;">0m</div>
+        <div class="modern-label" style="margin: 4px 0 0; font-size: 10px;">Read Time</div>
+    </div>
+</div>
 
-<!-- Content + Sidebar (SEO, FAQ) -->
-<?php require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-content.php'; ?>
+<div style="position: relative; margin-bottom: 24px;">
+    <label class="modern-label">Document Content</label>
+    <textarea id="input-data" class="modern-textarea" style="height: 300px; font-size: 14px; line-height: 1.6;" placeholder="Paste text here for instant analysis..."></textarea>
+    
+    <div style="position: absolute; bottom: 12px; right: 12px; display: flex; gap: 8px;">
+        <button id="clear-btn" class="vibe-button" style="background: white; color: #ef4444; border: 1px solid #fee2e2; box-shadow: none; height: 32px; width: 32px; padding: 0; justify-content: center;" title="Clear">
+            <i class="fa-solid fa-trash-can" style="font-size: 12px;"></i>
+        </button>
+        <button id="copy-btn" class="vibe-button" style="height: 32px; font-size: 12px;">
+            <i class="fa-solid fa-copy"></i> Copy
+        </button>
+    </div>
+</div>
 
-<!-- Suggested Tools Strip -->
-<?php require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-suggested.php'; ?>
-
-<!-- Popular Tools Section -->
-<section class="bg-white py-16 px-4 sm:px-6 lg:px-8 border-t border-gray-100">
-    <div class="max-w-7xl mx-auto text-center md:text-left">
-        <div class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
-            <div>
-                <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Most Popular Tools</h2>
-                <p class="text-gray-500 mt-1">Discover other highly useful tools in our directory.</p>
-            </div>
-            <a href="<?php echo URL_ROOT; ?>" class="inline-flex items-center px-6 py-3 bg-gray-50 text-gray-700 font-bold rounded-xl border border-gray-200 hover:bg-white hover:border-primary transition-all duration-200">
-                View All Tools <i class="fa-solid fa-arrow-right-long ms-3"></i>
-            </a>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px;">
+    <div class="react-card" style="padding: 24px;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">
+            <i class="fa-solid fa-chart-pie" style="color: #2563eb; font-size: 16px;"></i>
+            <h3 class="modern-label" style="margin: 0; font-size: 12px;">Density</h3>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <?php 
-            $allToolsRegistry = require CONFIG . DS . 'tools_registry.php';
-            $batchPopular = array_slice($allToolsRegistry, 0, 4, true); 
-            foreach ($batchPopular as $pSlug => $pTool): 
-            ?>
-            <a href="<?php echo URL_ROOT; ?>/<?php echo $pSlug; ?>" class="group bg-white border border-gray-200 rounded-2xl p-6 flex flex-col items-center text-center hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 transform hover:-translate-y-1">
-                <div class="w-16 h-16 bg-gray-50 text-primary rounded-2xl flex items-center justify-center text-2xl group-hover:bg-primary group-hover:text-white transition-all duration-300 shadow-sm mb-4 border border-gray-100">
-                    <?php echo render_tool_icon($pTool['icon']); ?>
-                </div>
-                <h3 class="text-lg font-bold text-gray-900 truncate w-full mb-2 group-hover:text-primary transition-colors"><?php echo htmlspecialchars($pTool['title']); ?></h3>
-                <p class="text-sm text-gray-500 line-clamp-2 leading-relaxed"><?php echo htmlspecialchars($pTool['desc']); ?></p>
-            </a>
-            <?php endforeach; ?>
+        <div id="keyword-list" style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="color: #94a3b8; font-style: italic; font-size: 13px;">Awaiting text for analysis...</div>
         </div>
     </div>
-</section>
+
+    <div class="react-card" style="padding: 24px;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">
+            <i class="fa-solid fa-flask-vial" style="color: #7c3aed; font-size: 16px;"></i>
+            <h3 class="modern-label" style="margin: 0; font-size: 12px;">Linguistics</h3>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #f8fafc; border-radius: 8px; border: 1px solid #f1f5f9;">
+                <span style="color: #64748b; font-size: 13px; font-weight: 500;">Avg. Word</span>
+                <span id="avg-word" style="font-weight: 700; color: #0f172a; font-size: 13px;">0.0</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #f8fafc; border-radius: 8px; border: 1px solid #f1f5f9;">
+                <span style="color: #64748b; font-size: 13px; font-weight: 500;">Paragraphs</span>
+                <span id="stat-paragraphs" style="font-weight: 700; color: #0f172a; font-size: 13px;">0</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #f8fafc; border-radius: 8px; border: 1px solid #f1f5f9;">
+                <span style="color: #64748b; font-size: 13px; font-weight: 500;">Syllables</span>
+                <span id="stat-syllables" style="font-weight: 700; color: #0f172a; font-size: 13px;">0</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="unique-article-content" style="display:none">
+    <h2>Professional Word Counter & Text Analyzer</h2>
+    <p class="lead">Writing is a craft of precision. Whether you're adhering to strict academic limits, optimizing SEO content, or crafting a concise marketing email, knowing your exact metrics is vital. Our Advanced Word Counter provides real-time, granular analysis of your text—completely locally and securely.</p>
+    
+    <h3>Beyond Basic Counting</h3>
+    <p>Unlike standard word counters that only see whitespace, our algorithm performs deep linguistic analysis. We calculate <strong>reading time</strong> based on average professional comprehension speeds and provide <strong>keyword density</strong> metrics to help you avoid over-optimization in SEO workflows.</p>
+
+    <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 16px; padding: 24px; margin: 32px 0;">
+        <h4 style="color: #1e40af; margin-top: 0;">Pro Tip: Readability Flow</h4>
+        <p style="margin-bottom: 0; color: #1e40af;">Check your average word length. Professional web content typically aims for an average word length of 4.5 to 5.5 characters to maintain high readability across diverse audiences.</p>
+    </div>
+
+    <h3>Developer-Grade Accuracy</h3>
+    <p>We treat every character with precision. Our counter accurately handles special symbols, code snippets, and varied line break formats (LF vs CRLF), making it the preferred choice for developers and technical writers who need an objective view of their documentation.</p>
+</div>
+
+<div id="unique-faq-content" style="display:none">
+    <div class="faq-item animate-fade-up">
+        <h3><i class="fa-solid fa-circle-question"></i> How accurate is the reading time estimate?</h3>
+        <p>Our estimate is based on a standard adult reading speed of 225 words per minute. This is the industry benchmark used by platforms like Medium and Pocket.</p>
+    </div>
+    <div class="faq-item animate-fade-up">
+        <h3><i class="fa-solid fa-circle-question"></i> Does this word counter count punctuation?</h3>
+        <p>Standard word count excludes punctuation. However, our "Character Count" metric includes every character, including spaces and symbols, for precise byte-level analysis.</p>
+    </div>
+    <div class="faq-item animate-fade-up">
+        <h3><i class="fa-solid fa-circle-question"></i> Is it safe to paste confidential documents here?</h3>
+        <p>Absolutely. The analysis happens entirely within your web browser. No text is transmitted to our servers, and your data is cleared the moment you close the tab or click 'Clear'.</p>
+    </div>
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -144,27 +125,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0);
         const paragraphs = text.split(/\n+/).filter(p => p.trim().length > 0);
         
-        // Basic Stats
         stats.words.innerText = words.length.toLocaleString();
         stats.chars.innerText = text.length.toLocaleString();
         stats.sentences.innerText = sentences.length.toLocaleString();
         stats.paragraphs.innerText = paragraphs.length.toLocaleString();
         
-        // Reading Time (225 wpm)
         const totalMinutes = Math.ceil(words.length / 225);
         stats.reading.innerText = totalMinutes + 'm';
 
-        // Syllable Logic
         let totalSyllables = 0;
-        words.forEach(w => {
-            totalSyllables += countSyllables(w);
-        });
+        words.forEach(w => { totalSyllables += countSyllables(w); });
         stats.syllables.innerText = totalSyllables.toLocaleString();
 
-        // Averages
         stats.avgWord.innerText = words.length ? (text.replace(/\s/g, '').length / words.length).toFixed(1) : '0.0';
 
-        // Keyword Density
         const density = {};
         words.filter(w => w.length > 3).forEach(w => {
             const key = w.toLowerCase().replace(/[.,!?;:]/g, '');
@@ -177,38 +151,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if(sortedKeywords.length) {
             stats.keywords.innerHTML = sortedKeywords.map(([k, v]) => `
-                <div class="flex justify-between items-center bg-white p-3 rounded-lg border border-gray-100 shadow-sm">
-                    <span class="font-medium text-gray-700 truncate mr-4">${k}</span>
-                    <span class="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded-md font-bold">${v} (${((v/words.length)*100).toFixed(1)}%)</span>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #f8fafc; border-radius: 12px; border: 1px solid #f1f5f9;">
+                    <span style="font-weight: 600; color: #0f172a;">${k}</span>
+                    <span style="font-size: 11px; font-weight: 700; color: #2563eb; background: rgba(37, 99, 235, 0.05); padding: 4px 8px; border-radius: 6px;">${v} (${((v/words.length)*100).toFixed(1)}%)</span>
                 </div>
             `).join('');
         } else {
-            stats.keywords.innerHTML = '<div class="text-gray-400 italic text-sm">Need more text for analysis...</div>';
+            stats.keywords.innerHTML = '<div style="color: #94a3b8; font-style: italic; font-size: 14px;">Need more text for analysis...</div>';
         }
     }
 
     input.addEventListener('input', updateStats);
 
     document.getElementById('clear-btn').addEventListener('click', () => {
-        input.value = '';
-        updateStats();
-        input.focus();
+        input.value = ''; updateStats(); input.focus();
     });
 
     document.getElementById('copy-btn').addEventListener('click', () => {
         if(!input.value) return;
         input.select();
         document.execCommand('copy');
-        
-        // Simple success state
         const originalText = document.getElementById('copy-btn').innerHTML;
         document.getElementById('copy-btn').innerHTML = '<i class="fa-solid fa-check"></i> <span>Copied!</span>';
-        setTimeout(() => {
-            document.getElementById('copy-btn').innerHTML = originalText;
-        }, 2000);
+        setTimeout(() => { document.getElementById('copy-btn').innerHTML = originalText; }, 2000);
     });
 });
 </script>
-
-<?php require_once APP . DS . 'views' . DS . 'layouts' . DS . 'footer.php'; ?>
-?>

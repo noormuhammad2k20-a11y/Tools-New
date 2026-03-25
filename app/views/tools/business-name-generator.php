@@ -1,10 +1,10 @@
-<?php require_once APP . DS . 'views' . DS . 'layouts' . DS . 'header.php'; ?>
+
 
 <!-- Slim Hero -->
-<?php require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-hero.php'; ?>
+
 
 <!-- Tool Interface -->
-<main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2 relative z-10 mb-16" id="tool-interface">
+
     <div class="bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 p-6 sm:p-10 relative overflow-hidden">
         
         <div class="absolute top-0 right-0 p-4">
@@ -92,13 +92,13 @@
             </div>
         </div>
     </div>
-</main>
+
 
     </div>
-</main>
+
 
 <!-- Content Area -->
-<?php require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-content.php'; ?>
+
 
 
 
@@ -168,4 +168,7 @@ function copyName(btn, name) {
 </script>
 
 
-<?php require_once APP . DS . 'views' . DS . 'layouts' . DS . 'footer.php'; ?>
+
+
+
+

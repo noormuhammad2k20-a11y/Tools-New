@@ -1,84 +1,79 @@
-<?php require_once APP . DS . 'views' . DS . 'layouts' . DS . 'header.php'; ?>
-
-<!-- Slim Hero -->
-<?php require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-hero.php'; ?>
-
-<!-- Tool Interface -->
-<main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2 relative z-10 mb-16" id="tool-interface">
-    <div class="bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 p-6 sm:p-10" style="overflow: visible;">
-        <!-- Mode Toggle -->
-        <div class="flex justify-center mb-10">
-            <div class="inline-flex p-1.5 bg-slate-100 rounded-3xl shadow-inner border border-slate-200/50">
-                <button id="mode-encode" class="px-8 py-3 bg-white text-indigo-600 font-black uppercase tracking-widest text-[10px] rounded-2xl shadow-sm transition-all duration-300">URL Encode</button>
-                <button id="mode-decode" class="px-8 py-3 text-slate-400 font-black uppercase tracking-widest text-[10px] rounded-2xl hover:text-slate-600 transition-all duration-300">URL Decode</button>
-            </div>
+<!-- URL Encoder/Decoder Specialized Interface -->
+<div class="animate-fade-up">
+    <!-- Mode Toggle -->
+    <div style="display: flex; justify-content: center; margin-bottom: 40px;">
+        <div style="background: #f1f5f9; padding: 6px; border-radius: 20px; display: flex; gap: 4px; border: 1px solid #e2e8f0;">
+            <button id="mode-encode" class="vibe-button" style="background: white; color: #2563eb; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border-radius: 14px; font-size: 12px; height: 44px; padding: 0 24px;">
+                URL ENCODE
+            </button>
+            <button id="mode-decode" class="vibe-button" style="background: transparent; color: #64748b; box-shadow: none; border-radius: 14px; font-size: 12px; height: 44px; padding: 0 24px;">
+                URL DECODE
+            </button>
         </div>
+    </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 animate-fade-in">
-            <!-- Input Column -->
-            <div class="space-y-4">
-                <div class="flex justify-between items-center px-2">
-                    <label id="input-label" class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Plain URL / Text</label>
-                    <button id="clear-btn" class="text-[10px] font-black text-rose-500 hover:text-rose-600 uppercase tracking-widest transition-colors">Clear</button>
-                </div>
-                <div class="relative group">
-                    <div class="absolute -inset-1 bg-gradient-to-tr from-indigo-500/20 to-purple-500/20 rounded-[2rem] blur opacity-0 group-focus-within:opacity-100 transition duration-500"></div>
-                    <textarea id="input-data" class="relative w-full h-[400px] bg-slate-50 border-2 border-slate-100 rounded-[2rem] p-8 font-mono text-sm text-slate-700 placeholder:text-slate-300 focus:ring-0 focus:border-indigo-500 transition-all outline-none resize-none custom-scrollbar" placeholder="https://example.com/search?q=test..."></textarea>
-                </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 32px;">
+        <div style="flex: 1;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <label id="input-label" class="modern-label" style="margin:0">Plain URL / Text</label>
+                <button id="clear-btn" style="background:none; border:none; color: #ef4444; font-size: 11px; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em;">Clear</button>
             </div>
-
-            <!-- Output Column -->
-            <div class="space-y-4">
-                <div class="flex justify-between items-center px-2">
-                    <label id="output-label" class="text-[10px] font-black text-indigo-500 uppercase tracking-[0.2em]">Encoded Result</label>
-                    <button id="copy-btn" class="text-[10px] font-black text-indigo-600 bg-indigo-50 hover:bg-indigo-100 px-4 py-1.5 rounded-full uppercase tracking-widest transition-all">Copy Result</button>
-                </div>
-                <div class="bg-indigo-900 rounded-[2rem] p-8 shadow-2xl relative overflow-hidden group border border-white/5 h-[400px] flex flex-col">
-                    <div class="absolute -top-20 -right-20 w-64 h-64 bg-white/5 rounded-full blur-[100px] group-hover:bg-white/10 transition-all duration-700"></div>
-                    <textarea id="output-data" class="relative z-10 w-full h-full bg-transparent border-0 font-mono text-sm font-black text-indigo-200 break-all leading-relaxed custom-scrollbar overflow-y-auto pr-2 selection:bg-indigo-400 selection:text-white resize-none outline-none" readonly placeholder="Result..."></textarea>
-                </div>
-            </div>
+            <textarea id="input-data" class="modern-textarea" style="height: 400px; font-size: 15px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;" placeholder="https://example.com/search?q=test..."></textarea>
         </div>
-
-        <!-- Mode Indicator -->
-        <div class="mt-10 bg-slate-50 border border-slate-100 rounded-3xl p-6 flex items-center gap-5">
-            <div class="w-12 h-12 bg-white text-indigo-500 rounded-2xl flex items-center justify-center text-xl shadow-sm border border-slate-100">
-                <i class="fa-solid fa-link"></i>
+        <div style="flex: 1;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <label id="output-label" class="modern-label" style="margin:0">Encoded Result</label>
+                <button id="copy-btn" class="vibe-button" style="padding: 6px 12px; font-size: 11px;">
+                    <i class="fa-solid fa-copy"></i> Copy Result
+                </button>
             </div>
-            <div>
-                <h4 class="text-[11px] font-black text-slate-900 uppercase tracking-widest mb-1">URI Standard Protocol</h4>
-                <p id="mode-desc" class="text-xs text-slate-500 font-medium">Currently operating in <strong>Percent-Encoding Mode</strong> for safe URI transport.</p>
+            <div class="result-box" style="height: 400px;">
+                <textarea id="output-data" readonly style="width: 100%; height: 100%; background: transparent; border: none; color: inherit; font-family: inherit; font-size: inherit; resize: none; outline: none;" placeholder="Result..."></textarea>
             </div>
         </div>
     </div>
-</main>
 
-<style>
-.custom-scrollbar::-webkit-scrollbar { width: 4px; }
-.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.05); border-radius: 10px; }
-#output-data.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); }
-</style>
+    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 20px; padding: 24px; display: flex; align-items: center; gap: 20px;">
+        <div style="width: 48px; height: 48px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #2563eb; border: 1px solid #e2e8f0; box-shadow: var(--shadow-sm);">
+            <i class="fa-solid fa-link"></i>
+        </div>
+        <div>
+            <h4 class="modern-label" style="margin-bottom: 4px; font-size: 11px;">URI Standard Protocol</h4>
+            <p id="mode-desc" style="margin: 0; color: #64748b; font-size: 13px;">Currently operating in <strong>Percent-Encoding Mode</strong> for safe URI transport.</p>
+        </div>
+    </div>
+</div>
 
-<!-- Professional Content Section -->
-<?php 
-echo render_partial('security-tool-content', [
-    'tool_name' => 'URL Encoder/Decoder',
-    'intro_title' => 'URL Encoding: Precision Formatting for Global Web Traffic',
-    'intro_content' => 'URL encoding, also known as percent-encoding, is a mechanism for translating complex information into a format suitable for transmission in a Uniform Resource Identifier (URI). By replacing unsafe characters with standardized "%" hex sequences, it ensures that your query parameters and path segments are correctly interpreted by all web servers and proxies. Our Professional URL utility provides a high-fidelity, client-side execution environment for instant bi-directional conversion.',
-    'detailed_title' => 'RFC 3986 Standards and URI Structural Integrity',
-    'detailed_content' => '<p>Ensuring the reliability of your web requests requires strict adherence to URI character standards. Our tool provides a robust, developer-first experience:</p>
-        <ul class="space-y-3 mt-5 text-sm font-medium text-slate-600">
-            <li><strong>Percent-Encoding Logic:</strong> Transform reserved characters into valid URI components while preserving the path and query structure.</li>
-            <li><strong>Bi-Directional Recover:</strong> Effortlessly decode percent-encoded strings back into their original human-readable format for auditing and log analysis.</li>
-            <li><strong>Real-Time Path Synthesis:</strong> Receive instantaneous updates as you type, providing immediate visual feedback for complex AJAX or API endpoint structures.</li>
-            <li><strong>Privacy-First Execution:</strong> All character mapping occurs within your browser\'s local stack, ensuring sensitive tokens or private endpoints never traverse the wire.</li>
-        </ul>'
-]);
-?>
+<div id="unique-article-content" style="display:none">
+    <h2>Professional URL Encoder & Decoder</h2>
+    <p class="lead">Uniform Resource Identifiers (URIs) are the backbone of the web. However, standard URLs can only contain a limited set of ASCII characters. Our <strong>Professional URL Utility</strong> handles the complex task of percent-encoding, ensuring your data travels safely through the vast infrastructure of the internet.</p>
+    
+    <h3>Why Percent-Encoding is Critical</h3>
+    <p>Reserved characters like spaces, question marks, and ampersands have special meanings in URLs. If you include them in query parameters without encoding, web servers may misinterpret your request. Our tool follows <strong>RFC 3986</strong> standards to correctly transform these symbols into hex-sequences (e.g., space becomes %20), maintaining the structural integrity of your links.</p>
 
-<!-- Suggested Tools Strip -->
-<?php require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-suggested.php'; ?>
+    <div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 16px; padding: 24px; margin: 32px 0;">
+        <h4 style="color: #065f46; margin-top: 0;">Pro Tip: SEO-Friendly Parameters</h4>
+        <p style="margin-bottom: 0; color: #065f46;">When building dynamic links for SEO, avoid over-encoding. Only encode path segments and query values, leaving structural elements like the protocol (https://) and domain intact. Our bi-directional tool helps you audit encoded strings to verify their readability for search crawlers.</p>
+    </div>
+
+    <h3>Local Privacy & High Fidelity</h3>
+    <p>This utility executes its core logic entirely within your local browser. Whether you're debugging sensitive API tokens or processing internal endpoints, your data remains secure on your machine. We provide real-time updates as you type, giving you instantaneous feedback for even the most complex URI structures.</p>
+</div>
+
+<div id="unique-faq-content" style="display:none">
+    <div class="faq-item animate-fade-up">
+        <h3><i class="fa-solid fa-circle-question"></i> What is the difference between Encode and Decode?</h3>
+        <p>Encoding transforms special characters into "%" followed by two hex digits. Decoding performs the reverse operation, turning the hex-sequences back into their original human-readable characters.</p>
+    </div>
+    <div class="faq-item animate-fade-up">
+        <h3><i class="fa-solid fa-circle-question"></i> Does this tool handle "plus" signs as spaces?</h3>
+        <p>In standard URL decoding, the "+" character is often used to represent a space. Our decoder is optimized to handle this convention, ensuring consistent results between different server environments.</p>
+    </div>
+    <div class="faq-item animate-fade-up">
+        <h3><i class="fa-solid fa-circle-question"></i> Can I encode an entire URL at once?</h3>
+        <p>Yes, but be aware that encoding an entire URL (including the https://) will render it non-functional in a browser. It is typically best to encode only the specific query parameters or path segments that contain special characters.</p>
+    </div>
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -89,6 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputLabel = document.getElementById('input-label');
     const outputLabel = document.getElementById('output-label');
     const modeDesc = document.getElementById('mode-desc');
+    const clearBtn = document.getElementById('clear-btn');
+    const copyBtn = document.getElementById('copy-btn');
     
     let mode = 'encode';
 
@@ -105,8 +102,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     encBtn.addEventListener('click', () => {
         mode = 'encode';
-        encBtn.className = "px-8 py-3 bg-white text-indigo-600 font-black uppercase tracking-widest text-[10px] rounded-2xl shadow-sm transition-all duration-300";
-        decBtn.className = "px-8 py-3 text-slate-400 font-black uppercase tracking-widest text-[10px] rounded-2xl hover:text-slate-600 transition-all duration-300";
+        encBtn.style.background = "white";
+        encBtn.style.color = "#2563eb";
+        encBtn.style.boxShadow = "0 4px 6px -1px rgba(0,0,0,0.1)";
+        
+        decBtn.style.background = "transparent";
+        decBtn.style.color = "#64748b";
+        decBtn.style.boxShadow = "none";
+
         inputLabel.innerText = "Plain URL / Text";
         outputLabel.innerText = "Encoded Result";
         modeDesc.innerHTML = "Currently operating in <strong>Percent-Encoding Mode</strong> for safe URI transport.";
@@ -116,8 +119,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     decBtn.addEventListener('click', () => {
         mode = 'decode';
-        decBtn.className = "px-8 py-3 bg-white text-indigo-600 font-black uppercase tracking-widest text-[10px] rounded-2xl shadow-sm transition-all duration-300";
-        encBtn.className = "px-8 py-3 text-slate-400 font-black uppercase tracking-widest text-[10px] rounded-2xl hover:text-slate-600 transition-all duration-300";
+        decBtn.style.background = "white";
+        decBtn.style.color = "#2563eb";
+        decBtn.style.boxShadow = "0 4px 6px -1px rgba(0,0,0,0.1)";
+        
+        encBtn.style.background = "transparent";
+        encBtn.style.color = "#64748b";
+        encBtn.style.boxShadow = "none";
+
         inputLabel.innerText = "Encoded URL";
         outputLabel.innerText = "Decoded Result";
         modeDesc.innerHTML = "Currently operating in <strong>URL Decoding Mode</strong> for human-readable recovery.";
@@ -126,13 +135,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     input.addEventListener('input', process);
-    document.getElementById('clear-btn').addEventListener('click', () => { input.value = ''; output.value = ''; input.focus(); });
-    document.getElementById('copy-btn').addEventListener('click', () => {
+    clearBtn.addEventListener('click', () => { input.value = ''; output.value = ''; input.focus(); });
+    copyBtn.addEventListener('click', () => {
+        if(!output.value) return;
         navigator.clipboard.writeText(output.value).then(() => {
-            showToast('Result copied to clipboard');
+            const originalText = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> <span>Copied</span>';
+            setTimeout(() => { copyBtn.innerHTML = originalText; }, 2000);
         });
     });
 });
 </script>
-
-<?php require_once APP . DS . 'views' . DS . 'layouts' . DS . 'footer.php'; ?>

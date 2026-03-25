@@ -212,18 +212,20 @@ function initToolPage() {
 
   // Real-time processing for local tools with textarea
   if (isLocal) {
-    form.addEventListener('input', () => {
-      const fd = new FormData(form);
-      const val = Array.from(fd.values()).find(v => v && v.toString().trim() !== '');
-      if (val) {
-        try {
-          const result = toolRegistry[slug](val.toString());
-          showOutput(result);
-        } catch(e) { /* ignore */ }
-      } else {
-        hideOutput();
-      }
-    });
+    const inputEl = document.getElementById('input-data');
+    if (inputEl) {
+      inputEl.addEventListener('input', () => {
+        const val = inputEl.value;
+        if (val && val.trim() !== '') {
+          try {
+            const result = toolRegistry[slug](val);
+            showOutput(result);
+          } catch(e) { /* ignore */ }
+        } else {
+          hideOutput();
+        }
+      });
+    }
   }
 
   // Form submit
@@ -240,19 +242,23 @@ function initToolPage() {
 
     try {
       if (isLocal) {
-        const entries = Array.from(fd.entries());
-        const input = entries.length > 0 ? entries[0][1] : '';
+        const inputEl = document.getElementById('input-data');
+        const input = inputEl ? inputEl.value : '';
         const result = toolRegistry[slug](input.toString());
         showOutput(result);
       } else {
         const response = await fetch(form.action, { method: 'POST', body: fd });
         const contentType = response.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
-          const data = await response.json();
+          let data = await response.json();
+          // Handle array wrapper if present
+          if (Array.isArray(data) && data.length > 0) {
+            data = data[0];
+          }
+          
           if (data.status === 'error') { 
             showOutput(data.message, true); 
           } else {
-            // Premium: Extract 'result' if it's a success JSON
             const output = data.result || (typeof data === 'string' ? data : JSON.stringify(data, null, 2));
             showOutput(output);
           }

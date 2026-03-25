@@ -1,10 +1,10 @@
-<?php require_once APP . DS . 'views' . DS . 'layouts' . DS . 'header.php'; ?>
+
 
 <!-- Slim Hero -->
-<?php require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-hero.php'; ?>
+
 
 <!-- Tool Interface -->
-<main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2 relative z-10 mb-16" id="tool-interface">
+
     <div class="bg-gray-900 rounded-[2.5rem] shadow-2xl border-4 border-indigo-500/10 p-6 sm:p-10 relative overflow-hidden group">
         
         <div class="absolute top-0 right-0 w-80 h-80 bg-indigo-500/5 rounded-full blur-[100px] -mr-40 -mt-40"></div>
@@ -46,10 +46,10 @@
         </div>
 
     </div>
-</main>
+
 
 <!-- Content Area -->
-<?php require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-content.php'; ?>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -92,4 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<?php require_once APP . DS . 'views' . DS . 'layouts' . DS . 'footer.php'; ?>
+
+
+
+

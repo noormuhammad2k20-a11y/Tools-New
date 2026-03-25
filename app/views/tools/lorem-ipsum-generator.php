@@ -1,59 +1,83 @@
-<?php require_once APP . DS . 'views' . DS . 'layouts' . DS . 'header.php'; ?>
-
-<!-- Slim Hero -->
-<?php require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-hero.php'; ?>
-
-<!-- Tool Interface -->
-<main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2 relative z-10 mb-16" id="tool-interface">
-    <div class="bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 p-6 sm:p-10">
-        
-        <!-- Controls -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="space-y-2">
-                <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Quantity</label>
-                <div class="flex items-center bg-gray-50 border border-gray-100 rounded-2xl p-1 gap-1">
-                    <button id="qty-minus" class="w-12 h-12 flex items-center justify-center bg-white border border-gray-100 rounded-xl hover:bg-gray-50 transition-all shadow-sm text-gray-400 hover:text-primary"><i class="fa-solid fa-minus"></i></button>
-                    <input type="number" id="qty-input" value="5" min="1" max="50" class="flex-grow bg-transparent border-none text-center font-black text-gray-700 focus:ring-0 text-lg">
-                    <button id="qty-plus" class="w-12 h-12 flex items-center justify-center bg-white border border-gray-100 rounded-xl hover:bg-gray-50 transition-all shadow-sm text-gray-400 hover:text-primary"><i class="fa-solid fa-plus"></i></button>
-                </div>
-            </div>
-
-            <div class="space-y-2">
-                <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Type</label>
-                <select id="type-select" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl font-bold text-gray-700 outline-none focus:ring-4 focus:ring-primary/5 transition-all appearance-none cursor-pointer">
-                    <option value="paras">Paragraphs</option>
-                    <option value="sentences">Sentences</option>
-                    <option value="words">Words</option>
-                </select>
-            </div>
-
-            <div class="flex items-end">
-                <button id="gen-btn" class="w-full py-4 bg-primary text-white rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i>
-                    Generate
+<!-- Lorem Ipsum Generator Specialized Interface -->
+<div class="animate-fade-up">
+    <!-- Configuration Grid -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-bottom: 32px;">
+        <div class="react-card" style="padding: 24px; background: #f8fafc; border-radius: 20px;">
+            <label class="modern-label" style="font-size: 11px;">Quantity</label>
+            <div style="display: flex; align-items: center; gap: 12px; margin-top: 12px;">
+                <button id="qty-minus" class="vibe-button" style="padding: 0; width: 44px; height: 44px; justify-content: center; background: white; color: #64748b; border: 1px solid #e2e8f0; box-shadow: none;">
+                    <i class="fa-solid fa-minus"></i>
+                </button>
+                <input type="number" id="qty-input" value="5" min="1" max="50" style="flex: 1; min-width: 0; background: transparent; border: none; text-align: center; font-size: 24px; font-weight: 800; color: #0f172a; outline: none;">
+                <button id="qty-plus" class="vibe-button" style="padding: 0; width: 44px; height: 44px; justify-content: center; background: white; color: #64748b; border: 1px solid #e2e8f0; box-shadow: none;">
+                    <i class="fa-solid fa-plus"></i>
                 </button>
             </div>
         </div>
 
-        <!-- Result Area -->
-        <div class="relative group">
-            <div id="output-text" class="w-full min-h-[400px] p-8 bg-gray-50 border border-gray-100 rounded-3xl text-slate-600 text-lg leading-relaxed font-serif whitespace-pre-wrap transition-all group-hover:bg-white group-hover:border-primary/20 group-hover:shadow-lg group-hover:shadow-primary/5 shadow-inner">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
-            </div>
-            
-            <div class="absolute top-4 right-4 flex gap-2">
-                <button id="copy-btn" class="px-6 py-2.5 bg-white border border-gray-100 text-primary text-[10px] font-black uppercase tracking-widest rounded-xl shadow-sm hover:border-primary transition-all flex items-center gap-2">
-                    <i class="fa-solid fa-copy"></i>
-                    Copy Text
-                </button>
-            </div>
+        <div class="react-card" style="padding: 24px; background: #f8fafc; border-radius: 20px;">
+            <label class="modern-label" style="font-size: 11px;">Output Type</label>
+            <select id="type-select" class="modern-input" style="margin-top: 12px; background: white; height: 44px; padding: 0 16px; font-weight: 600;">
+                <option value="paras">Paragraphs</option>
+                <option value="sentences">Sentences</option>
+                <option value="words">Words</option>
+            </select>
         </div>
 
+        <div style="display: flex; align-items: flex-end;">
+            <button id="gen-btn" class="vibe-button" style="width: 100%; height: 56px; justify-content: center; font-size: 16px; border-radius: 16px;">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                Generate Now
+            </button>
+        </div>
     </div>
-</main>
 
-<!-- Content Area -->
-<?php require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-content.php'; ?>
+    <!-- Output Area -->
+    <div style="position: relative;">
+        <label class="modern-label">Generated Placeholder Text</label>
+        <div id="output-text" class="result-box" style="min-height: 450px; background: white; color: #334155; border: 1px solid #e2e8f0; font-family: 'Inter', system-ui, sans-serif; font-size: 17px; line-height: 1.8; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);">
+            <!-- Content will be injected here -->
+        </div>
+        
+        <div style="position: absolute; top: 52px; right: 20px;">
+            <button id="copy-btn" class="vibe-button" style="padding: 8px 16px; font-size: 12px; background: rgba(255,255,255,0.9); backdrop-filter: blur(4px); color: #2563eb; border: 1px solid #bfdbfe;">
+                <i class="fa-solid fa-copy"></i>
+                <span>Copy Result</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="unique-article-content" style="display:none">
+    <h2>Professional Lorem Ipsum Generator</h2>
+    <p class="lead">Design is not just about how it looks, but how it feels. To truly understand the typography and layout of a project before the final copy is ready, developers and designers rely on standardized placeholder text. Our <strong>Professional Lorem Ipsum Generator</strong> provides high-fidelity "blind text" that mimics the natural flow of English without distracting the viewer with readable content.</p>
+    
+    <h3>The Legacy of Cicero</h3>
+    <p>The "Lorem Ipsum" passage is derived from sections 1.10.32 and 1.10.33 of Cicero's "De Finibus Bonorum et Malorum" (The Extremes of Good and Evil), written in 45 BC. This heritage ensures that your mockups carry a classic, balanced distribution of letters that is more effective than simple repetition of "text here".</p>
+
+    <div style="background: #fdf4ff; border: 1px solid #f5d0fe; border-radius: 16px; padding: 24px; margin: 32px 0;">
+        <h4 style="color: #86198f; margin-top: 0;">UI/UX Focus: Dynamic Scaffolding</h4>
+        <p style="margin-bottom: 0; color: #86198f;">Use our <strong>Sentence</strong> generator to test button labels and short call-to-actions, or switch to <strong>Paragraphs</strong> to verify column rhythm and vertical spacing in long-form layouts. The variable length logic ensures no two paragraphs look identical, reflecting real-world content distribution.</p>
+    </div>
+
+    <h3>Secure & Instant</h3>
+    <p>Speed is essential in creative workflows. Our generator works entirely client-side, delivering thousands of words in sub-millisecond time. No data is sent to servers, making it safe for use within secure internal design environments where external network calls are restricted.</p>
+</div>
+
+<div id="unique-faq-content" style="display:none">
+    <div class="faq-item animate-fade-up">
+        <h3><i class="fa-solid fa-circle-question"></i> Is this text actual Latin?</h3>
+        <p>While it is based on Latin, much of it is nonsensical and scrambled. This is intentional, as it prevents the reader from being distracted by the meaning of the words when they should be focusing on the visual design.</p>
+    </div>
+    <div class="faq-item animate-fade-up">
+        <h3><i class="fa-solid fa-circle-question"></i> How many paragraphs can I generate at once?</h3>
+        <p>You can generate up to 50 paragraphs or thousands of individual words instantly. The generator is optimized for high performance and won't slow down your browser.</p>
+    </div>
+    <div class="faq-item animate-fade-up">
+        <h3><i class="fa-solid fa-circle-question"></i> Can I use this for production websites?</h3>
+        <p>Lorem Ipsum is intended for staging and design phases only. We recommend replacing all placeholder text with final, proofread content before launching any production website to ensure proper SEO and user experience.</p>
+    </div>
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -71,7 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const len = 8 + Math.floor(Math.random() * 8);
         let s = [];
         for(let i=0; i<len; i++) s.push(randomWord());
-        return s.join(' ').charAt(0).toUpperCase() + s.join(' ').slice(1) + '.';
+        let res = s.join(' ');
+        return res.charAt(0).toUpperCase() + res.slice(1) + '.';
     }
 
     function generateParagraph() {
@@ -82,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function generate() {
-        const qty = parseInt(qtyInput.value);
+        const qty = Math.min(Math.max(parseInt(qtyInput.value) || 1, 1), 500);
         const type = typeSelect.value;
         let res = [];
 
@@ -100,19 +125,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     genBtn.addEventListener('click', generate);
     
-    document.getElementById('qty-plus').addEventListener('click', () => { qtyInput.value = parseInt(qtyInput.value) + 1; });
-    document.getElementById('qty-minus').addEventListener('click', () => { if(qtyInput.value > 1) qtyInput.value = parseInt(qtyInput.value) - 1; });
+    document.getElementById('qty-plus').addEventListener('click', () => { 
+        qtyInput.value = Math.min(parseInt(qtyInput.value) + 1, 500); 
+        generate();
+    });
+    document.getElementById('qty-minus').addEventListener('click', () => { 
+        if(qtyInput.value > 1) qtyInput.value = parseInt(qtyInput.value) - 1; 
+        generate();
+    });
 
     copyBtn.addEventListener('click', () => {
         navigator.clipboard.writeText(output.innerText);
-        const original = copyBtn.innerHTML;
-        copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
-        setTimeout(() => copyBtn.innerHTML = original, 2000);
+        const originalText = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> <span>Copied!</span>';
+        setTimeout(() => copyBtn.innerHTML = originalText, 2000);
     });
 
     // Initial generate
     generate();
 });
 </script>
-
-<?php require_once APP . DS . 'views' . DS . 'layouts' . DS . 'footer.php'; ?>

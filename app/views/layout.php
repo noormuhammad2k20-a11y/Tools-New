@@ -1,44 +1,81 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= isset($pageTitle) ? htmlspecialchars($pageTitle) . ' - ToolMaster' : 'ToolMaster - Professional Web Tools' ?></title>
-    <meta name="description" content="<?= isset($pageDesc) ? htmlspecialchars($pageDesc) : 'Professional digital utilities for software engineers and creators.' ?>">
-    
-    <!-- Frameworks & Fonts -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <!-- FontAwesome Fallback for legacy registry icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Custom Style -->
-    <link rel="stylesheet" href="<?= url('assets/css/style.css?v=' . time()) ?>">
-    <link rel="icon" type="image/png" href="<?= url('assets/img/favicon.png') ?>">
-</head>
-<body>
-<div class="app-shell">
-    <?php include __DIR__ . '/partials/navbar.php'; ?>
-    <?php include __DIR__ . '/partials/command_bar.php'; ?>
+    <title><?php echo $pageTitle ?? 'ProTools - Professional Web Utilities'; ?></title>
+    <meta name="description" content="<?php echo $pageDesc ?? 'High-performance digital tools for developers and creators.'; ?>">
 
-    <main class="main-container">
-        <div class="content-frame">
-            <div class="content-body">
-                <?= $content ?>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="<?php echo URL_ROOT; ?>/assets/css/style.css?v=<?php echo time(); ?>">
+</head>
+
+<body>
+    <header>
+        <div class="container navbar">
+            <a href="<?php echo URL_ROOT; ?>/" class="logo">
+                <i class="fa-solid fa-layer-group"></i> ProTools
+            </a>
+            <?php include APP . DS . 'views' . DS . 'partials' . DS . 'navbar.php'; ?>
+        </div>
+    </header>
+
+    <main>
+        <?php echo $content; ?>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="<?php echo URL_ROOT; ?>/" class="logo">
+                        <i class="fa-solid fa-layer-group"></i> ProTools
+                    </a>
+                    <p>Professional digital utilities for software engineers and creators. High-performance, secure, and privacy-first by architecture.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="<?php echo URL_ROOT; ?>/category/ai-content">AI Tools</a></li>
+                        <li><a href="<?php echo URL_ROOT; ?>/category/developer-tools">Dev Tools</a></li>
+                        <li><a href="<?php echo URL_ROOT; ?>/category/text-tools">Text Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">System Status</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
             </div>
 
-            <?php include __DIR__ . '/partials/footer.php'; ?>
+            <div class="footer-bottom">
+                <div>&copy; <?php echo date('Y'); ?> ProTools Infrastructure. All rights reserved.</div>
+                <div class="social-links">
+                    <a href="#"><i class="fa-brands fa-github"></i></a>
+                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                </div>
+            </div>
         </div>
-    </main>
-</div>
+    </footer>
 
-<!-- Scripts -->
-<script>const SITE_URL = '<?= url('') ?>/';</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="<?= url('assets/js/main.js?v=' . time()) ?>"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="<?php echo URL_ROOT; ?>/assets/js/main.js?v=<?php echo time(); ?>"></script>
+    <script src="<?php echo URL_ROOT; ?>/assets/js/app.js?v=<?php echo time(); ?>"></script>
 </body>
+
 </html>
+

@@ -875,7 +875,7 @@ class TextHandler extends Model {
     }
 
     private function formatTextResult($string) {
-        return "<textarea class='form-control' rows='6' readonly style='background:#f8fafc; cursor:text;'>" . htmlspecialchars($string) . "</textarea>";
+        return htmlspecialchars($string);
     }
 
     public function aiSummarizer($data) {

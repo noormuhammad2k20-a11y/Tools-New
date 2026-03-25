@@ -1,10 +1,10 @@
-<?php require_once APP . DS . 'views' . DS . 'layouts' . DS . 'header.php'; ?>
+
 
 <!-- Slim Hero -->
-<?php require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-hero.php'; ?>
+
 
 <!-- Tool Interface -->
-<main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2 relative z-10 mb-16" id="tool-interface">
+
     <div class="bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 p-6 sm:p-10">
         <form class="ajax-tool-form space-y-6 <?php echo !empty($tool['is_frontend_only']) ? 'frontend-only' : ''; ?>" action="<?php echo URL_ROOT; ?>/<?php echo $tool['slug']; ?>" method="POST" enctype="multipart/form-data">
             <?php if (!empty($tool['inputs'])): ?>
@@ -100,7 +100,7 @@
             <button type="button" class="px-6 py-2.5 bg-primary hover:bg-primary-hover text-white font-semibold flex-shrink-0 rounded-lg" id="visual-editor-apply">Apply & Process</button>
         </div>
     </div>
-</main>
+
 
 <!-- Content + Sidebar (SEO, FAQ, Related Tools) -->
 <?php 
@@ -109,36 +109,10 @@ require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-content.php';
 ?>
 
 <!-- Suggested Tools Strip -->
-<?php require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-suggested.php'; ?>
+
 
 <!-- Popular Tools Section -->
-<section class="bg-white py-16 px-4 sm:px-6 lg:px-8 border-t border-gray-100">
-    <div class="max-w-7xl mx-auto">
-        <div class="flex items-center justify-between mb-8">
-            <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Most Popular Tools</h2>
-            <a href="<?php echo URL_ROOT; ?>" class="text-sm font-medium text-primary hover:text-primary-hover transition-colors">See All &rarr;</a>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <?php 
-            // Load the tools registry to get the list of tools
-            $allToolsRegistry = require CONFIG . DS . 'tools_registry.php';
-            // Select 4 popular tools (for demo, slicing the first 4)
-            $popularTools = array_slice($allToolsRegistry, 0, 4, true); 
-            foreach ($popularTools as $pSlug => $pTool): 
-            ?>
-            <a href="<?php echo URL_ROOT; ?>/<?php echo $pSlug; ?>" class="group bg-gray-50 border border-gray-200 rounded-xl p-5 flex gap-4 items-start hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-all duration-200">
-                <div class="flex-shrink-0 w-12 h-12 bg-white text-primary rounded-lg flex items-center justify-center text-xl group-hover:bg-primary group-hover:text-white transition-colors duration-200 shadow-sm border border-gray-100">
-                    <?php echo render_tool_icon($pTool['icon']); ?>
-                </div>
-                <div class="flex-grow min-w-0">
-                    <h3 class="text-base font-semibold text-gray-900 truncate mb-1 group-hover:text-primary transition-colors"><?php echo htmlspecialchars($pTool['title']); ?></h3>
-                    <p class="text-xs text-gray-500 line-clamp-2 leading-relaxed"><?php echo htmlspecialchars($pTool['desc']); ?></p>
-                </div>
-            </a>
-            <?php endforeach; ?>
-        </div>
-    </div>
-</section>
+
 
 <!-- Schema -->
 <script type="application/ld+json">
@@ -228,4 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <script src="<?php echo URL_ROOT; ?>/assets/js/pdf-to-excel.js"></script>
 <?php endif; ?>
 
-<?php require_once APP . DS . 'views' . DS . 'layouts' . DS . 'footer.php'; ?>
+
+
+
+

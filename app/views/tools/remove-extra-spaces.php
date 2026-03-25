@@ -1,63 +1,64 @@
-<?php require_once APP . DS . 'views' . DS . 'layouts' . DS . 'header.php'; ?>
-
-<!-- Slim Hero -->
-<?php require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-hero.php'; ?>
-
-<!-- Tool Interface -->
-<main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2 relative z-10 mb-16" id="tool-interface">
-    <div class="bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 p-6 sm:p-10">
-        
-        <div class="relative mb-6">
-            <textarea id="input-text" class="w-full h-80 p-6 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all duration-300 text-gray-700 text-lg placeholder-gray-400 resize-none outline-none" placeholder="Paste your messy text here..."></textarea>
+<!-- Specialized Remove Extra Spaces Interface -->
+<div class="animate-fade-up">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+        <!-- Left Column: Input -->
+        <div class="react-card" style="display: flex; flex-direction: column; gap: 16px;">
+            <div>
+                <label class="modern-label">Messy Input Text</label>
+                <textarea id="input-data" class="modern-textarea" style="height: 350px; font-size: 14px;" placeholder="Paste text with tabs or many spaces..."></textarea>
+            </div>
             
-            <div class="absolute bottom-4 right-4 flex gap-2">
-                <button id="clear-btn" class="p-3 bg-white border border-gray-200 text-gray-400 hover:text-red-500 rounded-xl shadow-sm transition-all duration-200" title="Clear All">
-                    <i class="fa-solid fa-trash-can"></i>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <label class="react-card" style="padding: 12px; margin: 0; display: flex; align-items: center; gap: 10px; cursor: pointer; background: #f8fafc; border-color: #e2e8f0; box-shadow: none;">
+                    <input type="checkbox" id="opt-tabs" checked style="width: 16px; height: 16px;">
+                    <span style="font-size: 12px; font-weight: 600; color: #475569;">Replace Tabs</span>
+                </label>
+                <label class="react-card" style="padding: 12px; margin: 0; display: flex; align-items: center; gap: 10px; cursor: pointer; background: #f8fafc; border-color: #e2e8f0; box-shadow: none;">
+                    <input type="checkbox" id="opt-trim" checked style="width: 16px; height: 16px;">
+                    <span style="font-size: 12px; font-weight: 600; color: #475569;">Trim Edges</span>
+                </label>
+            </div>
+
+            <div style="display: flex; gap: 12px;">
+                <button id="clear-btn" class="vibe-button" style="background: white; color: #ef4444; border: 1px solid #fee2e2; box-shadow: none; flex: 1; justify-content: center;">
+                    <i class="fa-solid fa-trash-can"></i> Clear
                 </button>
-                <button id="clean-btn" class="px-6 py-3 bg-primary text-white rounded-xl shadow-lg shadow-primary/20 hover:bg-primary-hover transition-all duration-200 font-bold flex items-center gap-2 group">
-                    <i class="fa-solid fa-wand-magic-sparkles transition-transform group-hover:rotate-12"></i>
-                    <span>Clean Spaces</span>
+                <button id="clean-btn" class="vibe-button" style="flex: 2; justify-content: center;">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Clean Spaces
                 </button>
             </div>
         </div>
 
-        <!-- Options Container -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-            <label class="flex items-center gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100 cursor-pointer hover:bg-white hover:border-primary/20 transition-all group">
-                <input type="checkbox" id="opt-tabs" checked class="w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary shadow-sm">
-                <div class="flex flex-col">
-                    <span class="text-sm font-bold text-gray-700 group-hover:text-primary transition-colors">Replace Tabs</span>
-                    <span class="text-[10px] text-gray-400 uppercase tracking-wider font-medium">Tabs to 1 Space</span>
-                </div>
-            </label>
-            <label class="flex items-center gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100 cursor-pointer hover:bg-white hover:border-primary/20 transition-all group">
-                <input type="checkbox" id="opt-trim" checked class="w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary shadow-sm">
-                <div class="flex flex-col">
-                    <span class="text-sm font-bold text-gray-700 group-hover:text-primary transition-colors">Trim Edges</span>
-                    <span class="text-[10px] text-gray-400 uppercase tracking-wider font-medium">Remove Start/End Space</span>
-                </div>
-            </label>
+        <!-- Right Column: Result -->
+        <div class="react-card" style="display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label class="modern-label" style="margin: 0;">Clean Result</label>
+                <button id="copy-btn" class="vibe-button" style="height: 32px; font-size: 12px; padding: 0 12px;">
+                    <i class="fa-solid fa-copy"></i> Copy Result
+                </button>
+            </div>
+            <div id="outputText" class="result-box" style="height: 100%; min-height: 350px; white-space: pre-wrap; word-break: break-all; background: #1e293b; color: #e2e8f0; padding: 20px; border-radius: 12px;"></div>
         </div>
-
-        <div id="status-msg" class="hidden text-center p-4 bg-green-50 text-green-600 rounded-xl border border-green-100 font-bold mb-4 animate-fade-in">
-            <i class="fa-solid fa-check-circle mr-2"></i> All extra spaces removed successfully!
-        </div>
-
     </div>
-</main>
+</div>
 
-<!-- Content Area -->
-<?php require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-content.php'; ?>
+<div id="unique-article-content" style="display:none">
+    <h3>Professional Whitespace Management</h3>
+    <p>This utility is designed for high-performance text cleanup. It handles multi-line entries, tab-to-space conversions, and edge-trimming using optimized regex patterns. Ideal for developers cleaning up log files or content creators formatting copy for distribution.</p>
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const input = document.getElementById('input-text');
+    const input = document.getElementById('input-data');
+    const output = document.getElementById('outputText');
     const cleanBtn = document.getElementById('clean-btn');
-    const status = document.getElementById('status-msg');
 
-    cleanBtn.addEventListener('click', () => {
+    function performClean() {
         let text = input.value;
-        if(!text) return;
+        if(!text) {
+            output.innerText = '';
+            return;
+        }
 
         if(document.getElementById('opt-tabs').checked) {
             text = text.replace(/\t/g, ' ');
@@ -70,16 +71,27 @@ document.addEventListener('DOMContentLoaded', () => {
             text = text.trim();
         }
 
-        input.value = text;
-        
-        status.classList.remove('hidden');
-        setTimeout(() => status.classList.add('hidden'), 3000);
-    });
+        output.innerText = text;
+    }
+
+    cleanBtn.addEventListener('click', performClean);
 
     document.getElementById('clear-btn').addEventListener('click', () => {
-        input.value = ''; input.focus();
+        input.value = ''; output.innerText = ''; input.focus();
+    });
+
+    document.getElementById('copy-btn').addEventListener('click', () => {
+        const text = output.innerText;
+        if(!text) return;
+        navigator.clipboard.writeText(text);
+        const originalBtn = document.getElementById('copy-btn').innerHTML;
+        document.getElementById('copy-btn').innerHTML = '<i class="fa-solid fa-check"></i> <span>Copied!</span>';
+        setTimeout(() => { document.getElementById('copy-btn').innerHTML = originalBtn; }, 2000);
     });
 });
 </script>
 
-<?php require_once APP . DS . 'views' . DS . 'layouts' . DS . 'footer.php'; ?>
+
+
+
+

@@ -1,12 +1,12 @@
-<?php require_once APP . DS . 'views' . DS . 'layouts' . DS . 'header.php'; ?>
+
 
 <!-- Slim Hero -->
-<?php require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-hero.php'; ?>
+
 
 <script src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
 
 <!-- Tool Interface -->
-<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2 relative z-10 mb-16" id="tool-interface">
+
     <div class="bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 p-6 sm:p-10">
         
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
@@ -48,10 +48,10 @@
         </div>
 
     </div>
-</main>
+
 
 <!-- Content Area -->
-<?php require_once APP . DS . 'views' . DS . 'partials' . DS . 'tool-content.php'; ?>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -106,4 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<?php require_once APP . DS . 'views' . DS . 'layouts' . DS . 'footer.php'; ?>
+
+
+
+
